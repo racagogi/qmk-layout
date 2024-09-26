@@ -32,3 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif // !NO_PRINT
 //
 #define COMBO_ONLY_FROM_LAYER 0
+
+#define MOUSEKEY_MOVE_DELTA 1
+#define MOUSEKEY_MAX_SPEED 20
+#define MOUSEKEY_TIME_TO_MAX 15
