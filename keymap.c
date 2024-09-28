@@ -25,10 +25,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   COMBO_X(EI_TAB, KC_TAB, LCTL_T(KC_E), LALT_T(KC_I))                          \
   COMBO_X(ST_ENT, KC_ENT, LCTL_T(KC_S), LSFT_T(KC_T))                          \
   COMBO_X(NE_ENT, KC_ENT, LCTL_T(KC_E), LSFT_T(KC_N))                          \
+  COMBO_X(PF_LPRN, KC_LPRN, KC_P, KC_F)                                        \
+  COMBO_X(FW_LCBR, KC_LCBR, KC_F, KC_W)                                        \
+  COMBO_X(QW_BRC, KC_LBRC, KC_Q, KC_W)                                         \
+  COMBO_X(LU_RPAR, KC_RPRN, KC_L, KC_U)                                        \
+  COMBO_X(UY_RCBR, KC_RCBR, KC_U, KC_Y)                                        \
+  COMBO_X(YGRV_BRC, KC_RBRC, KC_Y, KC_GRV)                                     \
+  COMBO_X(ZX_PERC, KC_PERC, KC_Z, KC_X)                                        \
+  COMBO_X(XC_AT, KC_AT, KC_X, KC_C)                                            \
+  COMBO_X(CD_HASH, KC_HASH, KC_C, KC_D)                                        \
+  COMBO_X(HCOM_SLS, KC_SLSH, KC_H, KC_DQT)                                     \
+  COMBO_X(COMDOT_BSLS, KC_BSLS, KC_UNDS, KC_DQT)                               \
+  COMBO_X(DOTCOL_TILD, KC_TILD, KC_UNDS, KC_COLN)                              \
+  COMBO_X(PT_PIPE, KC_PIPE, KC_P, LSFT_T(KC_T))                                \
+  COMBO_X(FS_AMPR, KC_AMPR, KC_F, LCTL_T(KC_S))                                \
+  COMBO_X(SC_QUES, KC_QUES, KC_C, LCTL_T(KC_S))                                \
+  COMBO_X(TD_EXLM, KC_EXLM, KC_D, LSFT_T(KC_T))                                \
+  COMBO_X(LN_CIRC, KC_CIRC, KC_L, LSFT_T(KC_N))                                \
+  COMBO_X(UE_DLR, KC_DLR, KC_U, LCTL_T(KC_E))                                  \
+  COMBO_X(NH_ASTR, KC_ASTR, KC_H, LSFT_T(KC_N))                                \
+  COMBO_X(ECOM_PLUS, KC_PLUS, KC_DQT, LCTL_T(KC_E))                            \
   COMBO_X(GM_TG1, TG(1), KC_G, KC_M)                                           \
   COMBO_X(BJ_TG4, TG(4), KC_B, KC_J)                                           \
   COMBO_X(VK_LNG, KC_LNG1, KC_V, KC_K)                                         \
-  COMBO_X(TN_TOGG, CW_TOGG, LSFT_T(KC_T), LSFT_T(KC_N))
+  COMBO_X(TN_TOGG, CW_TOGG, LSFT_T(KC_T), LSFT_T(KC_N))                        \
+  COMBO_X(QGRV_BOOT, QK_BOOT, KC_Q, KC_GRV)
+
+const key_override_t min_key_override =
+    ko_make_basic(MOD_MASK_SHIFT, KC_UNDS, KC_MINS);
+const key_override_t quot_key_override =
+    ko_make_basic(MOD_MASK_SHIFT, KC_DQT, KC_QUOT);
+const key_override_t col_key_override =
+    ko_make_basic(MOD_MASK_SHIFT, KC_COLN, KC_EQL);
+const key_override_t grv_key_override =
+    ko_make_basic(MOD_MASK_SHIFT, KC_GRV, KC_SCLN);
+// This globally defines all key overrides to be used
+const key_override_t *key_overrides[] = {&min_key_override, &quot_key_override,
+                                         &col_key_override, &grv_key_override};
 
 enum combos {
 #define COMBO_X(name, combos, ...) name,
@@ -52,31 +85,29 @@ combo_t key_combos[] = {
   LGUI_T(x0), LALT_T(x1), LCTL_T(x2), LSFT_T(x3), x4
 #define ROWHR(x0, x1, x2, x3, x4)                                              \
   x0, LSFT_T(x1), LCTL_T(x2), LALT_T(x3), LGUI_T(x4)
-#define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, QK_BOOT
+#define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
   LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = KCS(ROW(KC_Q, KC_W, KC_F, KC_P, KC_B),
-              ROW(KC_J, KC_L, KC_U, KC_Y, LSFT(KC_QUOTE)),
-              ROWHL(KC_A, KC_R, KC_S, KC_T, KC_G),
-              ROWHR(KC_M, KC_N, KC_E, KC_I, KC_O),
-              ROW(KC_Z, KC_X, KC_C, KC_D, KC_V),
-              ROW(KC_K, KC_H, LSFT(KC_9), LSFT(KC_0), LSFT(KC_SCLN)),
-              THUM(KC_SPC, MO(2), MO(3), KC_BSPC)),
-    [1] = KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
-              ROW(KC_Y, KC_U, KC_I, KC_O, LSFT(KC_QUOTE)),
-              ROWHL(KC_A, KC_S, KC_D, KC_F, KC_G),
-              ROWHR(KC_H, KC_J, KC_K, KC_L, KC_P),
-              ROW(KC_Z, KC_X, KC_C, KC_V, KC_B),
-              ROW(KC_N, KC_M, LSFT(KC_9), LSFT(KC_0), LSFT(KC_SCLN)),
-              THUM(KC_SPC, MO(2), MO(3), KC_BSPC)),
-    [2] = KCS(ROW(KC_1, KC_2, KC_3, S(KC_3), KC_NO),
-              ROW(KC_NO, S(KC_EQL), KC_MINS, S(KC_8), S(KC_5)),
+    [0] = KCS(
+        ROW(KC_Q, KC_W, KC_F, KC_P, KC_B), ROW(KC_J, KC_L, KC_U, KC_Y, KC_GRV),
+        ROWHL(KC_A, KC_R, KC_S, KC_T, KC_G),
+        ROWHR(KC_M, KC_N, KC_E, KC_I, KC_O), ROW(KC_Z, KC_X, KC_C, KC_D, KC_V),
+        ROW(KC_K, KC_H, KC_DQT, KC_UNDS, KC_COLN),
+        THUM(LT(2, KC_COMM), KC_SPC, KC_BSPC, LT(3, KC_DOT))),
+    [1] = KCS(
+        ROW(KC_Q, KC_W, KC_E, KC_R, KC_T), ROW(KC_Y, KC_U, KC_I, KC_O, KC_GRV),
+        ROWHL(KC_A, KC_S, KC_D, KC_F, KC_G),
+        ROWHR(KC_H, KC_J, KC_K, KC_L, KC_P), ROW(KC_Z, KC_X, KC_C, KC_V, KC_B),
+        ROW(KC_N, KC_M, KC_DQT, KC_UNDS, KC_COLN),
+        THUM(LT(2, KC_COMM), KC_SPC, KC_BSPC, LT(3, KC_DOT))),
+    [2] = KCS(ROW(KC_1, KC_2, KC_3, KC_HASH, KC_NO),
+              ROW(KC_NO, KC_PSCR, LALT(KC_PSCR), LSG(KC_R), LSG(KC_S)),
               ROW(KC_4, KC_5, KC_6, KC_0, KC_NO),
               ROW(KC_NO, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI),
-              ROW(KC_7, KC_8, KC_9, S(KC_2), KC_B),
-              ROW(KC_NO, KC_COMM, KC_DOT, S(KC_9), S(KC_0)),
+              ROW(KC_7, KC_8, KC_9, KC_AT, KC_B),
+              ROW(KC_NO, KC_COMM, KC_DOT, KC_PIPE, KC_AMPR),
               THUM(KC_NO, KC_NO, KC_NO, KC_NO)),
     [3] = KCS(ROW(KC_F1, KC_F2, KC_F3, KC_F10, KC_NO),
               ROW(KC_NO, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT),
