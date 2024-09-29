@@ -32,19 +32,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   COMBO_X(UY_RCBR, KC_RCBR, KC_U, KC_Y)                                        \
   COMBO_X(YGRV_BRC, KC_RBRC, KC_Y, KC_GRV)                                     \
   COMBO_X(ZX_PERC, KC_PERC, KC_Z, KC_X)                                        \
-  COMBO_X(XC_AT, KC_AT, KC_X, KC_C)                                            \
-  COMBO_X(CD_HASH, KC_HASH, KC_C, KC_D)                                        \
+  COMBO_X(XC_PLUS, KC_PLUS, KC_X, KC_C)                                        \
+  COMBO_X(CD_ASTR, KC_ASTR, KC_C, KC_D)                                        \
   COMBO_X(HCOM_SLS, KC_SLSH, KC_H, KC_DQT)                                     \
   COMBO_X(COMDOT_BSLS, KC_BSLS, KC_UNDS, KC_DQT)                               \
   COMBO_X(DOTCOL_TILD, KC_TILD, KC_UNDS, KC_COLN)                              \
   COMBO_X(PT_PIPE, KC_PIPE, KC_P, LSFT_T(KC_T))                                \
   COMBO_X(FS_AMPR, KC_AMPR, KC_F, LCTL_T(KC_S))                                \
-  COMBO_X(SC_QUES, KC_QUES, KC_C, LCTL_T(KC_S))                                \
-  COMBO_X(TD_EXLM, KC_EXLM, KC_D, LSFT_T(KC_T))                                \
   COMBO_X(LN_CIRC, KC_CIRC, KC_L, LSFT_T(KC_N))                                \
   COMBO_X(UE_DLR, KC_DLR, KC_U, LCTL_T(KC_E))                                  \
-  COMBO_X(NH_ASTR, KC_ASTR, KC_H, LSFT_T(KC_N))                                \
-  COMBO_X(ECOM_PLUS, KC_PLUS, KC_DQT, LCTL_T(KC_E))                            \
   COMBO_X(GM_TG1, TG(1), KC_G, KC_M)                                           \
   COMBO_X(BJ_TG4, TG(4), KC_B, KC_J)                                           \
   COMBO_X(VK_LNG, KC_LNG1, KC_V, KC_K)                                         \
@@ -107,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               ROW(KC_4, KC_5, KC_6, KC_0, KC_NO),
               ROW(KC_NO, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI),
               ROW(KC_7, KC_8, KC_9, KC_AT, KC_B),
-              ROW(KC_NO, KC_COMM, KC_DOT, KC_PIPE, KC_AMPR),
+              ROW(KC_NO, KC_QUES, KC_EXLM, KC_PIPE, KC_AMPR),
               THUM(KC_NO, KC_NO, KC_NO, KC_NO)),
     [3] = KCS(ROW(KC_F1, KC_F2, KC_F3, KC_F10, KC_NO),
               ROW(KC_NO, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT),
@@ -123,3 +119,5 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               ROW(KC_NO, KC_NO, KC_NO, KC_NO, KC_NO),
               ROW(KC_NO, MS_BTN1, MS_BTN2, MS_BTN4, MS_BTN5),
               THUM(KC_NO, KC_NO, KC_NO, KC_NO))};
+
+
