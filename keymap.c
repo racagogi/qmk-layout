@@ -39,22 +39,21 @@ enum custom_layers {
   _Mod,
   _Fun,
   _Mov,
-  _Mdi,
+  _Mrdi,
+  _Mldi,
   _Mouse,
   _Plane,
   _CMD,
   _Win,
-  _Util
 };
 #define COMBO_LIST                                                             \
   COMBO_X(QGRV_BOOT, QK_BOOT, KC_Q, KC_GRV)                                    \
-  COMBO_X(TN_WORD, CW_TOGG, KC_T, KC_N)                                        \
-  COMBO_X(DH_KOR, TG(_Kor), KC_D, KC_H)                                        \
-  COMBO_X(SE_UTIL, OSL(_Util), KC_S, KC_E)                                     \
-  COMBO_X(ADQT_CMD, OSL(_CMD), KC_X, KC_DQT)                                   \
-  COMBO_X(RI_WIN, OSL(_Win), KC_R, KC_I)                                       \
-  COMBO_X(XUNDS_PLANE, OSL(_Plane), KC_X, KC_UNDS)                             \
-  COMBO_X(AO_FUN, OSL(_Fun), KC_A, KC_O)
+  COMBO_X(TN_WORD, CW_TOGG, LT(_Num, KC_T), LT(_Num, KC_N))                    \
+  COMBO_X(DH_KOR, TG(_Kor), LT(_Puc, KC_D), LT(_Puc, KC_H))                    \
+  COMBO_X(ADQT_CMD, OSL(_CMD), LT(_Brace, KC_X), LT(_Brace, KC_DQT))           \
+  COMBO_X(RI_WIN, OSL(_Win), LT(_Mod, KC_R), LT(_Mod, KC_I))                   \
+  COMBO_X(XUNDS_PLANE, OSL(_Plane), LT(_Var, KC_X), LT(_Var, KC_UNDS))         \
+  COMBO_X(AO_FUN, OSL(_Fun), LT(_Mov, KC_A), LT(_Mov, KC_O))
 
 enum combos {
 #define COMBO_X(name, combos, ...) name,
@@ -75,6 +74,7 @@ combo_t key_combos[] = {
 
 #define ROW(x0, x1, x2, x3, x4) x0, x1, x2, x3, x4
 #define NOROW KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
+#define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 #define ROWHL(x0, x1, x2, x3, x4)                                              \
   LGUI_T(x0), LALT_T(x1), LCTL_T(x2), LSFT_T(x3), x4
 #define ROWHR(x0, x1, x2, x3, x4)                                              \
@@ -89,7 +89,8 @@ combo_t key_combos[] = {
 #define ROWRS(x0, x1, x2, x3, x4)                                              \
   x0, LT(_Puc, x1), LT(_Brace, x2), LT(_Var, x3), LT(_Logic, x4)
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
-  LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
+  LAYOUT_planck_grid(x0, KC_NO, KC_NO, x1, x2, KC_NO, KC_NO, x3, x4, KC_NO,    \
+                     KC_NO, x5, KC_NO, KC_NO, KC_NO, x6, KC_NO, KC_NO, KC_NO)
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (!process_layer_lock(keycode, record, LLOCK)) {
@@ -137,14 +138,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                        ROWRM(KC_M, KC_N, KC_E, KC_I, KC_O),
                        ROWLS(KC_Z, KC_X, KC_C, KC_D, KC_V),
                        ROWRS(KC_K, KC_H, KC_DQT, KC_UNDS, KC_COLN),
-                       THUM(MO(_Mdi), KC_SPC, KC_BSPC, MO(_Mdi))),
+                       THUM(MO(_Mldi), KC_SPC, KC_BSPC, MO(_Mrdi))),
     [_Kor] = KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
                  ROW(KC_Y, KC_U, KC_I, KC_O, KC_GRV),
                  ROWLM(KC_A, KC_S, KC_D, KC_F, KC_G),
                  ROWRM(KC_H, KC_J, KC_K, KC_L, KC_P),
                  ROWLS(KC_Z, KC_X, KC_C, KC_V, KC_B),
                  ROWRS(KC_N, KC_M, KC_DQT, KC_UNDS, KC_COLN),
-                 THUM(MO(_Mdi), KC_SPC, KC_BSPC, MO(_Mdi))),
+                 THUM(MO(_Mldi), KC_SPC, KC_BSPC, MO(_Mrdi))),
     [_Num] = KCS(NOROW, NOROW, ROW(KC_8, KC_6, KC_4, KC_2, KC_NO),
                  ROW(KC_NO, KC_3, KC_5, KC_7, KC_9), NOROW, NOROW,
                  THUM(LLOCK, KC_0, KC_1, LLOCK)),
@@ -158,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                    ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_DLR), NOROW, NOROW,
                    THUM(LLOCK, KC_SLSH, KC_BSLS, LLOCK)),
     [_Var] = KCS(NOROW, NOROW, ROW(KC_AT, KC_AMPR, KC_ASTR, KC_DOT, KC_NO),
-                 ROW(KC_NO, KC_SLSH, KC_PERC, KC_PLUS, KC_EQL), NOROW, NOROW,
+                 ROW(KC_NO, KC_ASTR, KC_PERC, KC_PLUS, KC_EQL), NOROW, NOROW,
                  THUM(LLOCK, KC_UNDS, KC_MINS, LLOCK)),
     [_Mov] = KCS(NOROW, NOROW, ROW(KC_END, KC_PGDN, KC_PGUP, KC_HOME, KC_NO),
                  ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT), NOROW, NOROW,
@@ -172,9 +173,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_Fun] = KCS(NOROW, NOROW, ROW(KC_F8, KC_F6, KC_F4, KC_F2, KC_NO),
                  ROW(KC_NO, KC_F3, KC_F5, KC_F7, KC_F9), NOROW, NOROW,
                  THUM(KC_NO, KC_F11, KC_F1, KC_NO)),
-    [_Mdi] = KCS(NOROW, NOROW, ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_NO),
-                 ROW(KC_NO, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI), NOROW, NOROW,
-                 THUM(LLOCK, KC_LNG2, KC_LNG1, LLOCK)),
+    [_Mrdi] = KCS(TRROW, TRROW, TRROW,
+                  ROW(KC_TRNS, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI), TRROW,
+                  TRROW, THUM(LLOCK, KC_LNG2, KC_LNG1, LLOCK)),
+    [_Mldi] =
+        KCS(TRROW, TRROW, ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_TRNS),
+            TRROW, TRROW, TRROW, THUM(LLOCK, KC_LNG2, KC_LNG1, LLOCK)),
     [_Win] = KCS(
         NOROW, NOROW, ROW(RSG(KC_1), RSG(KC_2), RSG(KC_3), RSG(KC_4), KC_NO),
         ROW(KC_NO, LGUI(KC_DOT), LGUI(KC_COMM), RSG(KC_F), RSG(KC_C)), NOROW,
@@ -183,11 +187,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                    ROW(RCS(KC_X), RCS(KC_W), RCS(KC_PERC), RCS(KC_DQT), KC_NO),
                    ROW(KC_NO, VI_VSP, VI_HSP, VI_NEXT, VI_SWAP), NOROW, NOROW,
                    THUM(KC_NO, RCS(KC_Q), VI_CLOSE, KC_NO)),
-    [_CMD] = KCS(NOROW, NOROW, ROW(KC_NO, RSG(KC_M), RSG(KC_V), RSG(KC_W), KC_NO),
-                 ROW(KC_NO, KC_PSCR, LALT(KC_PSCR), RSG(KC_R), RSG(KC_S)),
-                 NOROW, NOROW, THUM(KC_NO, RSG(KC_LEFT), RSG(KC_RIGHT), KC_NO)),
-    [_Util] =
-        KCS(NOROW, NOROW, ROW(KC_F12, KC_F10, RCS(KC_C), RCS(KC_V), KC_NO),
-            ROW(KC_NO, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT), NOROW, NOROW,
-            THUM(KC_NO, MS_BTN5, MS_BTN4, KC_NO)),
+    [_CMD] =
+        KCS(NOROW, NOROW, ROW(KC_NO, RSG(KC_M), RSG(KC_V), RSG(KC_W), KC_NO),
+            ROW(KC_NO, KC_PSCR, LALT(KC_PSCR), RSG(KC_R), RSG(KC_S)), NOROW,
+            NOROW, THUM(KC_NO, RSG(KC_LEFT), RSG(KC_RIGHT), KC_NO)),
 };
