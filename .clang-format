@@ -1,2 +1,2 @@
-Language: cpp
-BaseOnStyle: google
+Language: Cpp
+BasedOnStyle: Mozilla

@@ -19,7 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include "features/layer_lock.h"
 
-enum custom_keycodes {
+enum custom_keycodes
+{
   LLOCK = SAFE_RANGE,
   VI_VSP,
   VI_HSP,
@@ -28,167 +29,277 @@ enum custom_keycodes {
   VI_CLOSE
 };
 
-enum custom_layers {
+#define WEZ_SWAP RCS(KC_X)
+#define WEZ_NEXT RCS(KC_N)
+#define WEZ_VSP RCS(KC_PERC)
+#define WEZ_HSP RCS(KC_DQT)
+#define WEZ_CLOSE RCS(KC_Q)
+#define NIRI_M1 LSG(KC_1)
+#define NIRI_M2 LSG(KC_2)
+#define NIRI_M3 LSG(KC_3)
+#define NIRI_M4 LSG(KC_4)
+#define NIRI_REC LSG(KC_R)
+#define NIRI_RST LSG(KC_S)
+#define NIRI_WEZ LSG(KC_W)
+#define NIRI_WAYD LSG(KC_M)
+#define NIRI_VIVA LSG(KC_V)
+#define NIRI_CUN LGUI(KC_COMM)
+#define NIRI_EXPL LGUI(KC_DOT)
+#define NIRI_CLOSE LSG(KC_Q)
+#define NIRI_SZDN LGUI(KC_MINS)
+#define NIRI_SZUP LGUI(KC_EQL)
+#define NIRI_SWPL LSG(KC_LEFT)
+#define NIRI_SWPR LSG(KC_RIGHT)
+#define NIRI_FULL LGUI(KC_F)
+
+#define COLEMAK_A LT(_Operator, KC_A)
+#define COLEMAK_R LT(_Var, KC_R)
+#define COLEMAK_S LT(_Brace, KC_S)
+#define COLEMAK_T LT(_Puc, KC_T)
+#define COLEMAK_N LT(_Puc, KC_N)
+#define COLEMAK_E LT(_Brace, KC_E)
+#define COLEMAK_I LT(_Var, KC_I)
+#define COLEMAK_O LT(_Operator, KC_O)
+#define COLEMAK_Z KC_Z
+#define COLEMAK_X LT(_Mouse, KC_X)
+#define COLEMAK_C LT(_Num, KC_C)
+#define COLEMAK_D LT(_Mov, KC_D)
+#define COLEMAK_H LT(_Mov, KC_H)
+#define COLEMAK_QUOT LT(_Num, KC_QUOT)
+#define COLEMAK_MINS LT(_Mouse, KC_MINS)
+#define COLEMAK_SCLN KC_SCLN
+
+#define KOR_A LT(_Operator, KC_A)
+#define KOR_S LT(_Var, KC_S)
+#define KOR_D LT(_Brace, KC_D)
+#define KOR_F LT(_Puc, KC_F)
+#define KOR_J LT(_Puc, KC_J)
+#define KOR_K LT(_Brace, KC_K)
+#define KOR_L LT(_Var, KC_L)
+#define KOR_P LT(_Operator, KC_P)
+#define KOR_Z KC_Z
+#define KOR_X LT(_Mouse, KC_X)
+#define KOR_C LT(_Num, KC_C)
+#define KOR_V LT(_Mov, KC_V)
+#define KOR_M LT(_Mov, KC_M)
+#define KOR_QUOT LT(_Num, KC_QUOT)
+#define KOR_MINS LT(_Mouse, KC_MINS)
+#define KOR_SCLN KC_SCLN
+
+enum custom_layers
+{
   _ColemakDH,
   _Kor,
   _Num,
+  _Fun,
   _Puc,
   _Brace,
-  _Logic,
+  _Operator,
   _Var,
-  _Mod,
-  _Fun,
   _Mov,
-  _Mrdi,
-  _Mldi,
   _Mouse,
   _Plane,
-  _CMD,
   _Win,
+  _CMD,
+  _Util,
+  _Mrdi,
+  _Mldi,
 };
+
 #define COMBO_LIST                                                             \
   COMBO_X(QGRV_BOOT, QK_BOOT, KC_Q, KC_GRV)                                    \
-  COMBO_X(TN_WORD, CW_TOGG, LT(_Num, KC_T), LT(_Num, KC_N))                    \
-  COMBO_X(DH_KOR, TG(_Kor), LT(_Puc, KC_D), LT(_Puc, KC_H))                    \
-  COMBO_X(ADQT_CMD, OSL(_CMD), LT(_Brace, KC_X), LT(_Brace, KC_DQT))           \
-  COMBO_X(RI_WIN, OSL(_Win), LT(_Mod, KC_R), LT(_Mod, KC_I))                   \
-  COMBO_X(XUNDS_PLANE, OSL(_Plane), LT(_Var, KC_X), LT(_Var, KC_UNDS))         \
-  COMBO_X(AO_FUN, OSL(_Fun), LT(_Mov, KC_A), LT(_Mov, KC_O))
+  COMBO_X(TN_WORD, CW_TOGG, COLEMAK_T, COLEMAK_N)                              \
+  COMBO_X(ST_ENT, KC_ENT, COLEMAK_S, COLEMAK_T)                                \
+  COMBO_X(NE_ENT, KC_ENT, COLEMAK_N, COLEMAK_E)                                \
+  COMBO_X(RS_TAB, KC_TAB, COLEMAK_R, COLEMAK_S)                                \
+  COMBO_X(EI_TAB, KC_TAB, COLEMAK_E, COLEMAK_I)                                \
+  COMBO_X(AR_ESC, KC_ESC, COLEMAK_A, COLEMAK_R)                                \
+  COMBO_X(IO_ESC, KC_ESC, COLEMAK_I, COLEMAK_O)                                \
+  COMBO_X(LOCK_L, LLOCK, KC_SPC, KC_BSPC)                                      \
+  COMBO_X(DH_KOR, TG(_Kor), COLEMAK_D, COLEMAK_H)                              \
+  COMBO_X(AO_FUN, OSL(_Fun), COLEMAK_A, COLEMAK_O)                             \
+  COMBO_X(SE_PLANE, OSL(_Plane), COLEMAK_S, COLEMAK_E)                         \
+  COMBO_X(CQUOT_WIN, OSL(_Win), COLEMAK_C, COLEMAK_QUOT)                       \
+  COMBO_X(RI_UTIL, OSL(_Util), COLEMAK_R, COLEMAK_I)                           \
+  COMBO_X(XMIN_CMD, OSL(_CMD), COLEMAK_X, COLEMAK_MINS)
 
-enum combos {
+enum combos
+{
 #define COMBO_X(name, combos, ...) name,
   COMBO_LIST
 #undef COMBO_X
 };
 
 #define COMBO_X(name, combos, ...)                                             \
-  const uint16_t PROGMEM name##_combo[] = {__VA_ARGS__, COMBO_END};
+  const uint16_t PROGMEM name##_combo[] = { __VA_ARGS__, COMBO_END };
 COMBO_LIST
 #undef COMBO_X
 
 combo_t key_combos[] = {
 #define COMBO_X(name, combos, ...) [name] = COMBO(name##_combo, combos),
-    COMBO_LIST
+  COMBO_LIST
 #undef COMBO_X
 };
 
 #define ROW(x0, x1, x2, x3, x4) x0, x1, x2, x3, x4
 #define NOROW KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-#define ROWHL(x0, x1, x2, x3, x4)                                              \
-  LGUI_T(x0), LALT_T(x1), LCTL_T(x2), LSFT_T(x3), x4
-#define ROWHR(x0, x1, x2, x3, x4)                                              \
-  x0, LSFT_T(x1), LCTL_T(x2), LALT_T(x3), LGUI_T(x4)
 #define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
-#define ROWLM(x0, x1, x2, x3, x4)                                              \
-  LT(_Mov, x0), LT(_Mod, x1), LT(_Mouse, x2), LT(_Num, x3), x4
-#define ROWLS(x0, x1, x2, x3, x4)                                              \
-  LT(_Logic, x0), LT(_Var, x1), LT(_Brace, x2), LT(_Puc, x3), x4
-#define ROWRM(x0, x1, x2, x3, x4)                                              \
-  x0, LT(_Num, x1), LT(_Mouse, x2), LT(_Mod, x3), LT(_Mov, x4)
-#define ROWRS(x0, x1, x2, x3, x4)                                              \
-  x0, LT(_Puc, x1), LT(_Brace, x2), LT(_Var, x3), LT(_Logic, x4)
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
-  LAYOUT_planck_grid(x0, KC_NO, KC_NO, x1, x2, KC_NO, KC_NO, x3, x4, KC_NO,    \
-                     KC_NO, x5, KC_NO, KC_NO, KC_NO, x6, KC_NO, KC_NO, KC_NO)
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
+bool
+process_record_user(uint16_t keycode, keyrecord_t* record)
+{
   if (!process_layer_lock(keycode, record, LLOCK)) {
     return false;
   }
   switch (keycode) {
-  case VI_VSP:
-    if (record->event.pressed) {
-      tap_code16(LCTL(KC_W));
-      tap_code(KC_V);
-      break;
-    }
-  case VI_HSP:
-    if (record->event.pressed) {
-      tap_code16(LCTL(KC_W));
-      tap_code(KC_S);
-      break;
-    }
-  case VI_NEXT:
-    if (record->event.pressed) {
-      tap_code16(LCTL(KC_W));
-      tap_code(KC_W);
-      break;
-    }
-  case VI_SWAP:
-    if (record->event.pressed) {
-      tap_code16(LCTL(KC_W));
-      tap_code(KC_X);
-      break;
-    }
-  case VI_CLOSE:
-    if (record->event.pressed) {
-      tap_code16(LCTL(KC_W));
-      tap_code(KC_Q);
-      break;
-    }
+    case VI_VSP:
+      if (record->event.pressed) {
+        tap_code16(LCTL(KC_W));
+        tap_code(KC_V);
+        break;
+      }
+    case VI_HSP:
+      if (record->event.pressed) {
+        tap_code16(LCTL(KC_W));
+        tap_code(KC_S);
+        break;
+      }
+    case VI_NEXT:
+      if (record->event.pressed) {
+        tap_code16(LCTL(KC_W));
+        tap_code(KC_W);
+        break;
+      }
+    case VI_SWAP:
+      if (record->event.pressed) {
+        tap_code16(LCTL(KC_W));
+        tap_code(KC_X);
+        break;
+      }
+    case VI_CLOSE:
+      if (record->event.pressed) {
+        tap_code16(LCTL(KC_W));
+        tap_code(KC_Q);
+        break;
+      }
   }
   return true;
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_ColemakDH] = KCS(ROW(KC_Q, KC_W, KC_F, KC_P, KC_B),
-                       ROW(KC_J, KC_L, KC_U, KC_Y, KC_GRV),
-                       ROWLM(KC_A, KC_R, KC_S, KC_T, KC_G),
-                       ROWRM(KC_M, KC_N, KC_E, KC_I, KC_O),
-                       ROWLS(KC_Z, KC_X, KC_C, KC_D, KC_V),
-                       ROWRS(KC_K, KC_H, KC_DQT, KC_UNDS, KC_COLN),
-                       THUM(MO(_Mldi), KC_SPC, KC_BSPC, MO(_Mrdi))),
-    [_Kor] = KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
-                 ROW(KC_Y, KC_U, KC_I, KC_O, KC_GRV),
-                 ROWLM(KC_A, KC_S, KC_D, KC_F, KC_G),
-                 ROWRM(KC_H, KC_J, KC_K, KC_L, KC_P),
-                 ROWLS(KC_Z, KC_X, KC_C, KC_V, KC_B),
-                 ROWRS(KC_N, KC_M, KC_DQT, KC_UNDS, KC_COLN),
-                 THUM(MO(_Mldi), KC_SPC, KC_BSPC, MO(_Mrdi))),
-    [_Num] = KCS(NOROW, NOROW, ROW(KC_8, KC_6, KC_4, KC_2, KC_NO),
-                 ROW(KC_NO, KC_3, KC_5, KC_7, KC_9), NOROW, NOROW,
-                 THUM(LLOCK, KC_0, KC_1, LLOCK)),
-    [_Puc] = KCS(NOROW, NOROW, ROW(KC_SCLN, KC_GRV, KC_QUOT, KC_DQT, KC_NO),
-                 ROW(KC_NO, KC_COMM, KC_DOT, KC_QUES, KC_EXLM), NOROW, NOROW,
-                 THUM(LLOCK, KC_AT, KC_HASH, LLOCK)),
-    [_Logic] = KCS(NOROW, NOROW, ROW(KC_PIPE, KC_AMPR, KC_LT, KC_GT, KC_NO),
-                   ROW(KC_NO, KC_QUES, KC_COLN, KC_EQL, KC_TILD), NOROW, NOROW,
-                   THUM(LLOCK, KC_SLSH, KC_BSLS, LLOCK)),
-    [_Brace] = KCS(NOROW, NOROW, ROW(KC_CIRC, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
-                   ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_DLR), NOROW, NOROW,
-                   THUM(LLOCK, KC_SLSH, KC_BSLS, LLOCK)),
-    [_Var] = KCS(NOROW, NOROW, ROW(KC_AT, KC_AMPR, KC_ASTR, KC_DOT, KC_NO),
-                 ROW(KC_NO, KC_ASTR, KC_PERC, KC_PLUS, KC_EQL), NOROW, NOROW,
-                 THUM(LLOCK, KC_UNDS, KC_MINS, LLOCK)),
-    [_Mov] = KCS(NOROW, NOROW, ROW(KC_END, KC_PGDN, KC_PGUP, KC_HOME, KC_NO),
-                 ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT), NOROW, NOROW,
-                 THUM(LLOCK, KC_INS, KC_DEL, LLOCK)),
-    [_Mouse] = KCS(NOROW, NOROW, ROW(MS_BTN5, MS_BTN4, MS_BTN2, MS_BTN1, KC_NO),
-                   ROW(KC_NO, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT), NOROW, NOROW,
-                   THUM(LLOCK, MS_WHLD, MS_WHLU, LLOCK)),
-    [_Mod] = KCS(NOROW, NOROW, ROW(KC_ESC, KC_TAB, KC_TAB, KC_ENT, KC_NO),
-                 ROW(KC_NO, KC_ENT, KC_TAB, KC_TAB, KC_ESC), NOROW, NOROW,
-                 THUM(LLOCK, KC_LNG2, KC_LNG1, LLOCK)),
-    [_Fun] = KCS(NOROW, NOROW, ROW(KC_F8, KC_F6, KC_F4, KC_F2, KC_NO),
-                 ROW(KC_NO, KC_F3, KC_F5, KC_F7, KC_F9), NOROW, NOROW,
-                 THUM(KC_NO, KC_F11, KC_F1, KC_NO)),
-    [_Mrdi] = KCS(TRROW, TRROW, TRROW,
-                  ROW(KC_TRNS, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI), TRROW,
-                  TRROW, THUM(LLOCK, KC_LNG2, KC_LNG1, LLOCK)),
-    [_Mldi] =
-        KCS(TRROW, TRROW, ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_TRNS),
-            TRROW, TRROW, TRROW, THUM(LLOCK, KC_LNG2, KC_LNG1, LLOCK)),
-    [_Win] = KCS(
-        NOROW, NOROW, ROW(RSG(KC_1), RSG(KC_2), RSG(KC_3), RSG(KC_4), KC_NO),
-        ROW(KC_NO, LGUI(KC_DOT), LGUI(KC_COMM), RSG(KC_F), RSG(KC_C)), NOROW,
-        NOROW, THUM(KC_NO, LGUI(KC_MINS), LGUI(KC_PLUS), KC_NO)),
-    [_Plane] = KCS(NOROW, NOROW,
-                   ROW(RCS(KC_X), RCS(KC_W), RCS(KC_PERC), RCS(KC_DQT), KC_NO),
-                   ROW(KC_NO, VI_VSP, VI_HSP, VI_NEXT, VI_SWAP), NOROW, NOROW,
-                   THUM(KC_NO, RCS(KC_Q), VI_CLOSE, KC_NO)),
-    [_CMD] =
-        KCS(NOROW, NOROW, ROW(KC_NO, RSG(KC_M), RSG(KC_V), RSG(KC_W), KC_NO),
-            ROW(KC_NO, KC_PSCR, LALT(KC_PSCR), RSG(KC_R), RSG(KC_S)), NOROW,
-            NOROW, THUM(KC_NO, RSG(KC_LEFT), RSG(KC_RIGHT), KC_NO)),
+  [_ColemakDH] =
+    KCS(ROW(KC_Q, KC_W, KC_F, KC_P, KC_B),
+        ROW(KC_J, KC_L, KC_U, KC_Y, KC_GRV),
+        ROW(COLEMAK_A, COLEMAK_R, COLEMAK_S, COLEMAK_T, KC_G),
+        ROW(KC_M, COLEMAK_N, COLEMAK_E, COLEMAK_I, COLEMAK_O),
+        ROW(COLEMAK_Z, COLEMAK_X, COLEMAK_C, COLEMAK_D, KC_V),
+        ROW(KC_K, COLEMAK_H, COLEMAK_QUOT, COLEMAK_MINS, COLEMAK_SCLN),
+        THUM(MO(_Mldi), KC_SPC, KC_BSPC, MO(_Mrdi))),
+  [_Kor] = KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
+               ROW(KC_Y, KC_U, KC_I, KC_O, KC_GRV),
+               ROW(KOR_A, KOR_S, KOR_D, KOR_F, KC_G),
+               ROW(KC_H, KOR_J, KOR_K, KOR_L, KOR_P),
+               ROW(KOR_Z, KOR_X, KOR_C, KOR_V, KC_B),
+               ROW(KC_N, KOR_M, KOR_QUOT, KOR_MINS, KOR_SCLN),
+               THUM(KC_TRNS, KC_SPC, KC_BSPC, KC_TRNS)),
+  [_Num] = KCS(NOROW,
+               NOROW,
+               ROW(KC_9, KC_7, KC_5, KC_3, KC_NO),
+               ROW(KC_NO, KC_2, KC_4, KC_6, KC_8),
+               NOROW,
+               NOROW,
+               THUM(KC_TRNS, KC_1, KC_0, KC_TRNS)),
+  [_Fun] = KCS(NOROW,
+               NOROW,
+               ROW(KC_F9, KC_F7, KC_F5, KC_F3, KC_NO),
+               ROW(KC_NO, KC_F2, KC_F4, KC_F6, KC_F8),
+               NOROW,
+               NOROW,
+               THUM(KC_TRNS, KC_F1, KC_F11, KC_TRNS)),
+  [_Puc] = KCS(NOROW,
+               NOROW,
+               ROW(KC_SCLN, KC_GRV, KC_QUOT, KC_DQT, KC_NO),
+               ROW(KC_NO, KC_COMM, KC_DOT, KC_QUES, KC_EXLM),
+               NOROW,
+               NOROW,
+               THUM(KC_TRNS, KC_AT, KC_HASH, KC_TRNS)),
+  [_Brace] = KCS(NOROW,
+                 NOROW,
+                 ROW(KC_CIRC, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
+                 ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_DLR),
+                 NOROW,
+                 NOROW,
+                 THUM(KC_TRNS, KC_SLSH, KC_BSLS, KC_TRNS)),
+  [_Var] = KCS(NOROW,
+               NOROW,
+               ROW(KC_AT, KC_AMPR, KC_ASTR, KC_DOT, KC_NO),
+               ROW(KC_NO, KC_QUES, KC_COLN, KC_EQL, KC_TILD),
+               NOROW,
+               NOROW,
+               THUM(KC_TRNS, KC_EXLM, KC_SCLN, KC_TRNS)),
+  [_Operator] = KCS(NOROW,
+                    NOROW,
+                    ROW(KC_PIPE, KC_AMPR, KC_LT, KC_GT, KC_NO),
+                    ROW(KC_NO, KC_ASTR, KC_PERC, KC_PLUS, KC_EQL),
+                    NOROW,
+                    NOROW,
+                    THUM(KC_TRNS, KC_UNDS, KC_MINS, KC_TRNS)),
+  [_Mov] = KCS(NOROW,
+               NOROW,
+               ROW(KC_END, KC_PGDN, KC_PGUP, KC_HOME, KC_NO),
+               ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
+               NOROW,
+               NOROW,
+               THUM(KC_TRNS, KC_INS, KC_DEL, KC_TRNS)),
+  [_Mouse] = KCS(NOROW,
+                 NOROW,
+                 ROW(MS_BTN5, MS_BTN4, MS_BTN2, MS_BTN1, KC_NO),
+                 ROW(KC_NO, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT),
+                 NOROW,
+                 NOROW,
+                 THUM(KC_TRNS, MS_WHLD, MS_WHLU, KC_TRNS)),
+  [_Plane] = KCS(NOROW,
+                 NOROW,
+                 ROW(WEZ_SWAP, WEZ_NEXT, WEZ_HSP, WEZ_VSP, KC_NO),
+                 ROW(KC_NO, VI_VSP, VI_HSP, VI_NEXT, VI_SWAP),
+                 NOROW,
+                 NOROW,
+                 THUM(KC_TRNS, WEZ_CLOSE, VI_CLOSE, KC_NO)),
+  [_Win] = KCS(NOROW,
+               NOROW,
+               ROW(NIRI_M1, NIRI_M2, NIRI_M3, NIRI_M4, KC_NO),
+               ROW(KC_NO, NIRI_CUN, NIRI_EXPL, NIRI_FULL, NIRI_CLOSE),
+               NOROW,
+               NOROW,
+               THUM(KC_TRNS, NIRI_SZDN, NIRI_SZUP, KC_TRNS)),
+  [_CMD] = KCS(NOROW,
+               NOROW,
+               ROW(KC_NO, NIRI_WAYD, NIRI_VIVA, NIRI_WEZ, KC_NO),
+               ROW(KC_NO, KC_PSCR, LALT(KC_PSCR), NIRI_REC, NIRI_RST),
+               NOROW,
+               NOROW,
+               THUM(KC_NO, NIRI_SWPL, NIRI_SWPR, KC_NO)),
+  [_Util] = KCS(NOROW,
+                NOROW,
+                ROW(KC_ESC, KC_TAB, KC_TAB, KC_ENT, KC_NO),
+                ROW(KC_NO, KC_ENT, KC_TAB, KC_TAB, KC_ESC),
+                NOROW,
+                NOROW,
+                THUM(KC_TRNS, KC_F12, KC_F10, KC_TRNS)),
+  [_Mrdi] = KCS(TRROW,
+                TRROW,
+                TRROW,
+                ROW(KC_TRNS, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI),
+                TRROW,
+                TRROW,
+                THUM(KC_TRNS, KC_LNG2, KC_LNG1, KC_TRNS)),
+  [_Mldi] = KCS(TRROW,
+                TRROW,
+                ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_TRNS),
+                TRROW,
+                TRROW,
+                TRROW,
+                THUM(KC_TRNS, KC_LNG2, KC_LNG1, KC_TRNS)),
 };
