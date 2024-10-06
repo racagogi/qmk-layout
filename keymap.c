@@ -248,7 +248,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     THUM(KC_TRNS, KC_UNDS, KC_MINS, KC_TRNS)),
   [_Mov] = KCS(NOROW,
                NOROW,
-               ROW(KC_END, KC_PGDN, KC_PGUP, KC_HOME, KC_NO),
+               ROW(KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO),
                ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
                NOROW,
                NOROW,
