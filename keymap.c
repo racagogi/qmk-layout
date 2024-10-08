@@ -196,7 +196,10 @@ combo_t key_combos[] = {
 #define NOROW KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 #define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
+
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
+  LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
+/* #define KCS(x0, x1, x2, x3, x4, x5, x6) \
   LAYOUT_planck_grid(x0,                                                       \
                      KC_NO,                                                    \
                      KC_NO,                                                    \
@@ -215,7 +218,7 @@ combo_t key_combos[] = {
                      x6,                                                       \
                      KC_NO,                                                    \
                      KC_NO,                                                    \
-                     KC_NO)
+                     KC_NO) */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ColemakDH] =
