@@ -34,17 +34,14 @@ enum custom_layers
   _ColemakDH,
   _Kor,
   _Num,
-  _Fun,
   _Puc,
   _Brace,
   _Operator,
-  _Var,
   _Mov,
   _Mouse,
   _Plane,
+  _Works,
   _Win,
-  _CMD,
-  _Util,
 };
 
 #define WEZ_SWAP RCS(KC_X)
@@ -78,14 +75,14 @@ enum custom_layers
 #define COLEMAK_E LCTL_T(KC_E)
 #define COLEMAK_I LALT_T(KC_I)
 #define COLEMAK_O LGUI_T(KC_O)
-#define COLEMAK_Z LT(_Operator, KC_Z)
-#define COLEMAK_X LT(_Var, KC_X)
+#define COLEMAK_Z KC_Z
+#define COLEMAK_X LT(_Operator, KC_X)
 #define COLEMAK_C LT(_Brace, KC_C)
 #define COLEMAK_D LT(_Puc, KC_D)
 #define COLEMAK_H LT(_Puc, KC_H)
 #define COLEMAK_QUOT LT(_Brace, KC_QUOT)
-#define COLEMAK_MINS LT(_Var, KC_MINS)
-#define COLEMAK_SCLN LT(_Operator, KC_SCLN)
+#define COLEMAK_MINS LT(_Operator, KC_MINS)
+#define COLEMAK_SCLN KC_SCLN
 
 #define KOR_A LGUI_T(KC_A)
 #define KOR_S LALT_T(KC_S)
@@ -95,14 +92,14 @@ enum custom_layers
 #define KOR_K LCTL_T(KC_K)
 #define KOR_L LALT_T(KC_L)
 #define KOR_P LGUI_T(KC_P)
-#define KOR_Z LT(_Operator, KC_Z)
-#define KOR_X LT(_Var, KC_X)
+#define KOR_Z KC_Z
+#define KOR_X LT(_Operator, KC_X)
 #define KOR_C LT(_Brace, KC_C)
 #define KOR_V LT(_Puc, KC_V)
 #define KOR_M LT(_Puc, KC_M)
 #define KOR_QUOT LT(_Brace, KC_QUOT)
-#define KOR_MINS LT(_Var, KC_MINS)
-#define KOR_SCLN LT(_Operator, KC_SCLN)
+#define KOR_MINS LT(_Operator, KC_MINS)
+#define KOR_SCLN KC_SCLN
 
 bool
 process_record_user(uint16_t keycode, keyrecord_t* record)
@@ -145,6 +142,34 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
   return true;
 }
 
+const key_override_t f1_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, KC_1, KC_F1);
+const key_override_t f2_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, LSFT_T(KC_2), KC_F2);
+const key_override_t f3_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, LSFT_T(KC_3), KC_F3);
+const key_override_t f4_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, LCTL_T(KC_4), KC_F4);
+const key_override_t f5_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, LCTL_T(KC_5), KC_F5);
+const key_override_t f6_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, LALT_T(KC_6), KC_F6);
+const key_override_t f7_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, LALT_T(KC_7), KC_F7);
+const key_override_t f8_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, LGUI_T(KC_8), KC_F8);
+const key_override_t f9_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, LGUI_T(KC_9), KC_F9);
+const key_override_t f10_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, KC_0, KC_F11);
+
+// This globally defines all key overrides to be used
+const key_override_t* key_overrides[] = {
+  &f1_key_override, &f2_key_override,  &f3_key_override, &f4_key_override,
+  &f5_key_override, &f6_key_override,  &f7_key_override, &f8_key_override,
+  &f9_key_override, &f10_key_override,
+};
+
 #define COMBO_LIST                                                             \
   COMBO_X(QGRV_BOOT, QK_BOOT, KC_Q, KC_GRV)                                    \
   COMBO_X(TN_WORD, CW_TOGG, COLEMAK_T, COLEMAK_N)                              \
@@ -164,11 +189,12 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
   COMBO_X(OSCLN_DEL, KC_INS, COLEMAK_O, COLEMAK_SCLN)                          \
   COMBO_X(TG_LANG, TG(_Kor), KC_SPC, KC_BSPC)                                  \
   COMBO_X(DH_LOCK, LLOCK, COLEMAK_D, COLEMAK_H)                                \
-  COMBO_X(AO_FUN, OSL(_Fun), COLEMAK_A, COLEMAK_O)                             \
-  COMBO_X(SE_PLANE, OSL(_Plane), COLEMAK_S, COLEMAK_E)                         \
-  COMBO_X(CQUOT_WIN, OSL(_Win), COLEMAK_C, COLEMAK_QUOT)                       \
-  COMBO_X(RI_UTIL, OSL(_Util), COLEMAK_R, COLEMAK_I)                           \
-  COMBO_X(XMIN_CMD, OSL(_CMD), COLEMAK_X, COLEMAK_MINS)
+  COMBO_X(DC_PLANE, OSL(_Plane), COLEMAK_D, COLEMAK_C)                         \
+  COMBO_X(CX_WIN, OSL(_Win), COLEMAK_C, COLEMAK_X)                             \
+  COMBO_X(XZ_WORKS, OSL(_Works), COLEMAK_X, COLEMAK_Z)                         \
+  COMBO_X(HQUOT_PLANE, OSL(_Plane), COLEMAK_H, COLEMAK_QUOT)                   \
+  COMBO_X(MINQUOT_WIN, OSL(_Win), COLEMAK_MINS, COLEMAK_QUOT)                  \
+  COMBO_X(SCLNMIN_WORKS, OSL(_Works), COLEMAK_SCLN, COLEMAK_MINS)
 
 enum combos
 {
@@ -197,9 +223,9 @@ combo_t key_combos[] = {
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 #define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
 
+/* #define KCS(x0, x1, x2, x3, x4, x5, x6) \ LAYOUT_split_3x5_3(x0, x1, x2, x3,
+  x4, x5, x6) */
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
-  LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
-/* #define KCS(x0, x1, x2, x3, x4, x5, x6) \
   LAYOUT_planck_grid(x0,                                                       \
                      KC_NO,                                                    \
                      KC_NO,                                                    \
@@ -218,7 +244,7 @@ combo_t key_combos[] = {
                      x6,                                                       \
                      KC_NO,                                                    \
                      KC_NO,                                                    \
-                     KC_NO) */
+                     KC_NO)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ColemakDH] =
@@ -228,7 +254,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ROW(KC_M, COLEMAK_N, COLEMAK_E, COLEMAK_I, COLEMAK_O),
         ROW(COLEMAK_Z, COLEMAK_X, COLEMAK_C, COLEMAK_D, KC_V),
         ROW(KC_K, COLEMAK_H, COLEMAK_QUOT, COLEMAK_MINS, COLEMAK_SCLN),
-        THUM(MO(_Num), KC_SPC, KC_BSPC, MO(_Mov))),
+        THUM(LT(_Num, KC_COMM), KC_SPC, KC_BSPC, LT(_Mov, KC_DOT))),
   [_Kor] = KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
                ROW(KC_Y, KC_U, KC_I, KC_O, KC_GRV),
                ROW(KOR_A, KOR_S, KOR_D, KOR_F, KC_G),
@@ -243,47 +269,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_1, KC_NO),
                ROW(KC_NO, KC_0, KC_LCTL, KC_LALT, KC_LGUI),
                THUM(MO(_Mouse), KC_LSFT, KC_LSFT, MO(_Mouse))),
-  [_Fun] = KCS(NOROW,
-               NOROW,
-               ROHLW(KC_F9, KC_F7, KC_F5, KC_F3, KC_NO),
-               ROHRW(KC_NO, KC_F2, KC_F4, KC_F6, KC_F8),
-               ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_F1, KC_NO),
-               ROW(KC_NO, KC_F11, KC_LCTL, KC_LALT, KC_LGUI),
-               THUM(MO(_Mouse), KC_NO, KC_NO, MO(_Mouse))),
   [_Puc] = KCS(NOROW,
                NOROW,
-               ROW(KC_SCLN, KC_GRV, KC_QUOT, KC_DQT, KC_NO),
-               ROW(KC_NO, KC_COMM, KC_DOT, KC_QUES, KC_EXLM),
+               ROW(KC_SCLN, KC_AT, KC_QUES, KC_UNDS, KC_NO),
+               ROW(KC_NO, KC_COLN, KC_EXLM, KC_HASH, KC_GRV),
                ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_NO, KC_NO),
                ROW(KC_NO, KC_NO, KC_LCTL, KC_LALT, KC_LGUI),
-               THUM(KC_LSFT, KC_AT, KC_HASH, KC_LSFT)),
+               THUM(KC_LSFT, KC_QUOT, KC_DQT, KC_LSFT)),
   [_Brace] = KCS(NOROW,
                  NOROW,
-                 ROW(KC_CIRC, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
-                 ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_DLR),
+                 ROW(KC_CIRC, KC_DLR, KC_SLSH, KC_BSLS, KC_NO),
+                 ROW(KC_NO, KC_LBRC, KC_LCBR, KC_RCBR, KC_RBRC),
                  ROW(KC_LGUI, KC_LALT, KC_NO, KC_LCTL, KC_NO),
                  ROW(KC_NO, KC_LCTL, KC_NO, KC_LALT, KC_LGUI),
-                 THUM(KC_LSFT, KC_SLSH, KC_BSLS, KC_LSFT)),
-  [_Var] = KCS(NOROW,
-               NOROW,
-               ROW(KC_AT, KC_AMPR, KC_ASTR, KC_DOT, KC_NO),
-               ROW(KC_NO, KC_QUES, KC_COLN, KC_EQL, KC_TILD),
-               ROW(KC_LGUI, KC_NO, KC_LALT, KC_LCTL, KC_NO),
-               ROW(KC_NO, KC_LCTL, KC_LALT, KC_NO, KC_LGUI),
-               THUM(KC_LSFT, KC_EXLM, KC_SCLN, KC_LSFT)),
+                 THUM(KC_LSFT, KC_LPRN, KC_RPRN, KC_LSFT)),
   [_Operator] = KCS(NOROW,
                     NOROW,
                     ROW(KC_PIPE, KC_AMPR, KC_LT, KC_GT, KC_NO),
-                    ROW(KC_NO, KC_ASTR, KC_PERC, KC_PLUS, KC_EQL),
+                    ROW(KC_NO, KC_ASTR, KC_PERC, KC_EQL, KC_PLUS),
                     ROW(KC_NO, KC_LGUI, KC_LALT, KC_LCTL, KC_NO),
                     ROW(KC_NO, KC_LCTL, KC_LALT, KC_LGUI, KC_NO),
-                    THUM(KC_LSFT, KC_UNDS, KC_MINS, KC_LSFT)),
+                    THUM(KC_LSFT, KC_MINS, KC_TILD, KC_LSFT)),
   [_Mov] = KCS(NOROW,
                NOROW,
                ROW(KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO),
                ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
-               ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_NO),
-               ROW(KC_NO, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI),
+               ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_VOLD, KC_NO),
+               ROW(KC_NO, KC_VOLU, KC_LCTL, KC_LALT, KC_LGUI),
                THUM(MO(_Mouse), KC_NO, KC_NO, MO(_Mouse))),
   [_Mouse] = KCS(NOROW,
                  NOROW,
@@ -301,23 +313,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  THUM(KC_TRNS, WEZ_CLOSE, VI_CLOSE, KC_NO)),
   [_Win] = KCS(NOROW,
                NOROW,
-               ROW(NIRI_M1, NIRI_M2, NIRI_M3, NIRI_M4, KC_NO),
-               ROW(KC_NO, NIRI_CUN, NIRI_EXPL, NIRI_FULL, NIRI_CLOSE),
-               NOROW,
-               NOROW,
-               THUM(KC_TRNS, NIRI_SZDN, NIRI_SZUP, KC_TRNS)),
-  [_CMD] = KCS(NOROW,
-               NOROW,
                ROW(KC_NO, NIRI_WAYD, NIRI_VIVA, NIRI_WEZ, KC_NO),
-               ROW(KC_NO, KC_PSCR, LALT(KC_PSCR), NIRI_REC, NIRI_RST),
+               ROW(NIRI_M1, NIRI_M2, NIRI_M3, NIRI_M4, KC_NO),
                NOROW,
                NOROW,
                THUM(KC_NO, NIRI_SWPL, NIRI_SWPR, KC_NO)),
-  [_Util] = KCS(NOROW,
-                NOROW,
-                ROW(KC_ESC, KC_TAB, RCS(KC_C), RCS(KC_V), KC_NO),
-                ROW(KC_NO, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT),
-                NOROW,
-                NOROW,
-                THUM(KC_TRNS, KC_F12, KC_F10, KC_TRNS)),
+  [_Works] = KCS(NOROW,
+                 NOROW,
+                 ROW(KC_NO, NIRI_CUN, NIRI_EXPL, NIRI_FULL, NIRI_CLOSE),
+                 ROW(KC_NO, KC_PSCR, LALT(KC_PSCR), NIRI_REC, NIRI_RST),
+                 NOROW,
+                 NOROW,
+                 THUM(KC_TRNS, NIRI_SZDN, NIRI_SZUP, KC_TRNS)),
 };
