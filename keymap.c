@@ -223,9 +223,9 @@ combo_t key_combos[] = {
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 #define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
 
-/* #define KCS(x0, x1, x2, x3, x4, x5, x6) \ LAYOUT_split_3x5_3(x0, x1, x2, x3,
-  x4, x5, x6) */
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
+  LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
+/* #define KCS(x0, x1, x2, x3, x4, x5, x6) \
   LAYOUT_planck_grid(x0,                                                       \
                      KC_NO,                                                    \
                      KC_NO,                                                    \
@@ -244,7 +244,7 @@ combo_t key_combos[] = {
                      x6,                                                       \
                      KC_NO,                                                    \
                      KC_NO,                                                    \
-                     KC_NO)
+                     KC_NO) */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ColemakDH] =
@@ -266,9 +266,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                NOROW,
                ROHLW(KC_9, KC_7, KC_5, KC_3, KC_NO),
                ROHRW(KC_NO, KC_2, KC_4, KC_6, KC_8),
-               ROW(KC_LGUI, KC_LALT, KC_LCTL, KC_1, KC_NO),
-               ROW(KC_NO, KC_0, KC_LCTL, KC_LALT, KC_LGUI),
-               THUM(MO(_Mouse), KC_LSFT, KC_LSFT, MO(_Mouse))),
+               ROW(KC_NO, KC_NO, KC_NO, KC_1, KC_NO),
+               ROW(KC_NO, KC_0, KC_NO, KC_NO, KC_NO),
+               THUM(MO(_Mouse), KC_SPC, KC_BSPC, MO(_Mouse))),
   [_Puc] = KCS(NOROW,
                NOROW,
                ROW(KC_SCLN, KC_AT, KC_QUES, KC_UNDS, KC_NO),
@@ -314,7 +314,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_Win] = KCS(NOROW,
                NOROW,
                ROW(KC_NO, NIRI_WAYD, NIRI_VIVA, NIRI_WEZ, KC_NO),
-               ROW(NIRI_M1, NIRI_M2, NIRI_M3, NIRI_M4, KC_NO),
+               ROW(KC_NO, NIRI_M1, NIRI_M2, NIRI_M3, NIRI_M4),
                NOROW,
                NOROW,
                THUM(KC_NO, NIRI_SWPL, NIRI_SWPR, KC_NO)),
