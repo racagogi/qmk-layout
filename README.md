@@ -18,17 +18,16 @@ Secondary keys and layers are activated via specific combinations or by holding 
 ![horizen combo](https://github.com/user-attachments/assets/b29cb81f-5b90-4520-9ff0-4f4df553d59b)
 
 - Home Row combos mapping utilize keys
-
 - Below Home Row combos turn on utility layers
+
+### vertical combo
+
+![vertical combo](https://github.com/user-attachments/assets/d56f3a08-705e-4c5b-9b10-e8a7cf5823c5)
 
 - both hands combos keyboard utility key
   - Caps word temporarily enables caps lock for a single word.
   - layer lock keep the current layer active, second tap deactivates the layer
   - kor combo toggle the qwerty layout
-
-### vertical combo
-
-![vertical combo](https://github.com/user-attachments/assets/d56f3a08-705e-4c5b-9b10-e8a7cf5823c5)
 
 ## alpha layout
 
@@ -36,12 +35,21 @@ Secondary keys and layers are activated via specific combinations or by holding 
 
 ![kor](https://github.com/user-attachments/assets/c37791bb-70b9-4d35-8710-e50b5c8d2ec4)
 
+- home row keys mapped symetiricaly, right hand keys also mapped left mod keys
+- dot key and comma key mapped as mod-tap key
 
 ## other keys
 
 ![symbol](https://github.com/user-attachments/assets/4dd97f99-aa8a-497c-9cb7-b4b83f7b8bd0)
 
+- punc
+- pair
+- operation
+
 ![navi](https://github.com/user-attachments/assets/624c35b5-441b-4cb9-a714-9e1e51bec5f8)
+
+splits number keys into odd and even groups.
 
 ![utility](https://github.com/user-attachments/assets/419cc323-df9a-4bd8-98b6-42e677078f7e)
 
+this keys used for nvim, wezterm, niri
