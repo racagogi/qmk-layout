@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <stdbool.h>
 #include QMK_KEYBOARD_H
 #include "features/layer_lock.h"
 
@@ -109,6 +110,7 @@ enum custom_layers
 bool
 process_record_user(uint16_t keycode, keyrecord_t* record)
 {
+  static bool mode_active = false;
   if (!process_layer_lock(keycode, record, LLOCK)) {
     return false;
   }
@@ -148,6 +150,39 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
         layer_invert(_Kor);
         tap_code(KC_LNG1);
         break;
+      }
+    case KC_LGUI:
+      if (record->event.pressed) {
+        if (layer_state_is(_Kor)) {
+          layer_off(_Kor);
+          tap_code(KC_LGUI);
+          mode_active = true;
+        } else if (mode_active) {
+          layer_on(_Kor);
+          mode_active = false;
+        }
+      }
+    case KC_LALT:
+      if (record->event.pressed) {
+        if (layer_state_is(_Kor)) {
+          layer_off(_Kor);
+          tap_code(KC_LALT);
+          mode_active = true;
+        } else if (mode_active) {
+          layer_on(_Kor);
+          mode_active = false;
+        }
+      }
+    case KC_LCTL:
+      if (record->event.pressed) {
+        if (layer_state_is(_Kor)) {
+          layer_off(_Kor);
+          tap_code(KC_LCTL);
+          mode_active = true;
+        } else if (mode_active) {
+          layer_on(_Kor);
+          mode_active = false;
+        }
       }
   }
   return true;
