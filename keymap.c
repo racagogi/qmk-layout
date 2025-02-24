@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "action_layer.h"
+#include "action_util.h"
 #include <stdbool.h>
 #include QMK_KEYBOARD_H
 #include "features/layer_lock.h"
@@ -113,6 +115,13 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
   static bool mode_active = false;
   if (!process_layer_lock(keycode, record, LLOCK)) {
     return false;
+  }
+  if (get_mods() == MOD_BIT(KC_LCTL) && layer_state_is(_Kor)) {
+    layer_off(_Kor);
+    mode_active = true;
+  } else if (mode_active) {
+    layer_on(_Kor);
+    mode_active = false;
   }
   switch (keycode) {
     case VI_VSP:
@@ -266,8 +275,8 @@ combo_t key_combos[] = {
 #define ROHLW(x0, x1, x2, x3, x4)                                              \
   LGUI_T(x0), LALT_T(x1), LCTL_T(x2), LSFT_T(x3), x4
 #define NOROW KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
-#define RMOD KC_NO, MOD_LSFT, MOD_LCTL, MOD_LALT, MOD_LGUI
-#define LMOD MOD_LGUI, MOD_LALT, MOD_LCTL, MOD_LSFT, KC_NO
+#define RMOD KC_NO, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI
+#define LMOD KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_NO
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 // #define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
 #define THUM(x0, x1, x2, x3) x0, x1, x2, x3
