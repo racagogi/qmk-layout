@@ -92,14 +92,6 @@ enum custom_layers
 #define COLEMAK_MINS LT(_Operator, KC_MINS)
 #define COLEMAK_SCLN KC_SCLN
 
-#define KOR_A LGUI_T(KC_A)
-#define KOR_S LALT_T(KC_S)
-#define KOR_D LCTL_T(KC_D)
-#define KOR_F LSFT_T(KC_F)
-#define KOR_J LSFT_T(KC_J)
-#define KOR_K LCTL_T(KC_K)
-#define KOR_L LALT_T(KC_L)
-#define KOR_P LGUI_T(KC_P)
 #define KOR_Z KC_Z
 #define KOR_X LT(_Operator, KC_X)
 #define KOR_C LT(_Brace, KC_C)
@@ -109,24 +101,12 @@ enum custom_layers
 #define KOR_MINS LT(_Operator, KC_MINS)
 #define KOR_SCLN KC_SCLN
 
-#define HT(key, mod)                                                           \
-  if (record->event.pressed) {                                                 \
-    my_hash_timer = timer_read();                                              \
-    register_code(mod);                                                        \
-  } else {                                                                     \
-    unregister_code(mod);                                                      \
-    if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {                         \
-      SEND_STRING(key);                                                        \
-    }                                                                          \
-  }
-
 bool
 process_record_user(uint16_t keycode, keyrecord_t* record)
 {
   static bool ctl_active = false;
   static bool alt_active = false;
   static bool gui_active = false;
-  static uint16_t my_hash_timer;
   if (!process_layer_lock(keycode, record, LLOCK)) {
     return false;
   }
@@ -188,8 +168,6 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
         tap_code(KC_LNG1);
         break;
       }
-    case KC_PIPE:
-      HT("|", KC_LGUI)
   }
   return true;
 }
@@ -282,39 +260,38 @@ combo_t key_combos[] = {
   LAYOUT_split_3x5_2(x0, x1, x2, x3, x4, x5, x6)
 // LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
 /* #define KCS(x0, x1, x2, x3, x4, x5, x6) \
-  LAYOUT_planck_grid(x0,                                                       \
-                     KC_NO,                                                    \
-                     KC_NO,                                                    \
-                     x1,                                                       \
-                     x2,                                                       \
-                     KC_NO,                                                    \
-                     KC_NO,                                                    \
-                     x3,                                                       \
-                     x4,                                                       \
-                     KC_NO,                                                    \
-                     KC_NO,                                                    \
-                     x5,                                                       \
-                     KC_NO,                                                    \
-                     KC_NO,                                                    \
-                     KC_NO,                                                    \
-                     x6,                                                       \
-                     KC_NO,                                                    \
-                     KC_NO,                                                    \
-                     KC_NO) */
+  LAYOUT_planck_grid(x0, \
+                     KC_NO, \
+                     KC_NO, \
+                     x1, \
+                     x2, \
+                     KC_NO, \
+                     KC_NO, \
+                     x3, \
+                     x4, \
+                     KC_NO, \
+                     KC_NO, \
+                     x5, \
+                     KC_NO, \
+                     KC_NO, \
+                     KC_NO, \
+                     x6, \
+                     KC_NO, \
+                     KC_NO, \ KC_NO) */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ColemakDH] =
     KCS(ROW(KC_Q, KC_W, KC_F, KC_P, KC_B),
         ROW(KC_J, KC_L, KC_U, KC_Y, KC_GRV),
-        ROW(COLEMAK_A, COLEMAK_R, COLEMAK_S, COLEMAK_T, KC_G),
-        ROW(KC_M, COLEMAK_N, COLEMAK_E, COLEMAK_I, COLEMAK_O),
+        ROHLW(KC_A, KC_R, KC_S, KC_T, KC_G),
+        ROHRW(KC_M, KC_N, KC_E, KC_I, KC_O),
         ROW(COLEMAK_Z, COLEMAK_X, COLEMAK_C, COLEMAK_D, KC_V),
         ROW(KC_K, COLEMAK_H, COLEMAK_QUOT, COLEMAK_MINS, COLEMAK_SCLN),
         THUM(LT(_Num, KC_COMM), KC_SPC, KC_BSPC, LT(_Mov, KC_DOT))),
   [_Kor] = KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
                ROW(KC_Y, KC_U, KC_I, KC_O, KC_GRV),
-               ROW(KOR_A, KOR_S, KOR_D, KOR_F, KC_G),
-               ROW(KC_H, KOR_J, KOR_K, KOR_L, KOR_P),
+               ROHLW(KC_A, KC_S, KC_D, KC_F, KC_G),
+               ROHRW(KC_H, KC_J, KC_K, KC_L, KC_P),
                ROW(KOR_Z, KOR_X, KOR_C, KOR_V, KC_B),
                ROW(KC_N, KOR_M, KOR_QUOT, KOR_MINS, KOR_SCLN),
                THUM(KC_TRNS, KC_SPC, KC_BSPC, KC_TRNS)),
