@@ -37,10 +37,8 @@ enum custom_layers
 {
   _ColemakDH,
   _Kor,
-  _ModColemakDH,
   _Num,
   _Puc,
-  _Brace,
   _Operator,
   _Mov,
   _Mouse,
@@ -84,21 +82,21 @@ enum custom_layers
 #define COLEMAK_I LALT_T(KC_I)
 #define COLEMAK_O LGUI_T(KC_O)
 #define COLEMAK_Z KC_Z
-#define COLEMAK_X LT(_Operator, KC_X)
-#define COLEMAK_C LT(_Brace, KC_C)
-#define COLEMAK_D LT(_Puc, KC_D)
-#define COLEMAK_H LT(_Puc, KC_H)
-#define COLEMAK_QUOT LT(_Brace, KC_QUOT)
-#define COLEMAK_MINS LT(_Operator, KC_MINS)
+#define COLEMAK_X KC_X
+#define COLEMAK_C KC_C
+#define COLEMAK_D KC_D
+#define COLEMAK_H KC_H
+#define COLEMAK_QUOT KC_QUOT
+#define COLEMAK_MINS KC_MINS
 #define COLEMAK_SCLN KC_SCLN
 
 #define KOR_Z KC_Z
-#define KOR_X LT(_Operator, KC_X)
-#define KOR_C LT(_Brace, KC_C)
-#define KOR_V LT(_Puc, KC_V)
-#define KOR_M LT(_Puc, KC_M)
-#define KOR_QUOT LT(_Brace, KC_QUOT)
-#define KOR_MINS LT(_Operator, KC_MINS)
+#define KOR_X KC_X
+#define KOR_C KC_C
+#define KOR_V KC_V
+#define KOR_M KC_M
+#define KOR_QUOT KC_QUOT
+#define KOR_MINS KC_MINS
 #define KOR_SCLN KC_SCLN
 
 bool
@@ -295,47 +293,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                ROW(KOR_Z, KOR_X, KOR_C, KOR_V, KC_B),
                ROW(KC_N, KOR_M, KOR_QUOT, KOR_MINS, KOR_SCLN),
                THUM(KC_TRNS, KC_SPC, KC_BSPC, KC_TRNS)),
-  [_Num] = KCS(LMOD,
-               RMOD,
+  [_Num] = KCS(ROW(KC_LBRC, KC_LCBR, KC_LPRN, KC_LT, KC_NO),
+               ROW(KC_NO, KC_GT, KC_RPRN, KC_RCBR, KC_RBRC),
                ROHLW(KC_9, KC_7, KC_5, KC_3, KC_NO),
                ROHRW(KC_NO, KC_2, KC_4, KC_6, KC_8),
                ROW(KC_NO, KC_NO, KC_F11, KC_1, KC_NO),
                ROW(KC_NO, KC_0, KC_F12, KC_NO, KC_NO),
-               THUM(MO(_Mouse), KC_SPC, KC_BSPC, MO(_Mouse))),
-  [_Puc] = KCS(LMOD,
-               RMOD,
-               ROW(KC_SCLN, KC_AT, KC_QUES, KC_UNDS, KC_NO),
-               ROW(KC_NO, KC_COLN, KC_EXLM, KC_HASH, KC_GRV),
-               NOROW,
-               NOROW,
-               THUM(KC_LSFT, KC_QUOT, KC_DQT, KC_LSFT)),
-  [_Brace] = KCS(LMOD,
-                 RMOD,
-                 ROW(KC_CIRC, KC_DLR, KC_SLSH, KC_BSLS, KC_NO),
-                 ROW(KC_NO, KC_LBRC, KC_LCBR, KC_RCBR, KC_RBRC),
-                 NOROW,
-                 NOROW,
-                 THUM(KC_LSFT, KC_LPRN, KC_RPRN, KC_LSFT)),
-  [_Operator] = KCS(LMOD,
-                    RMOD,
-                    ROW(KC_PIPE, KC_AMPR, KC_LT, KC_GT, KC_NO),
-                    ROW(KC_NO, KC_ASTR, KC_PERC, KC_EQL, KC_PLUS),
-                    NOROW,
-                    NOROW,
-                    THUM(KC_LSFT, KC_MINS, KC_TILD, KC_LSFT)),
+               THUM(MO(_Mouse), KC_NO, MO(_Puc), MO(_Mouse))),
   [_Mov] = KCS(LMOD,
                RMOD,
                ROW(KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO),
                ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
                NOROW,
                NOROW,
-               THUM(MO(_Mouse), KC_NO, KC_NO, MO(_Mouse))),
+               THUM(MO(_Mouse), MO(_Operator), KC_NO, MO(_Mouse))),
+  [_Puc] = KCS(NOROW,
+               ROW(KC_SCLN, KC_AT, KC_QUES, KC_UNDS, KC_NO),
+               LMOD,
+               ROW(KC_NO, KC_COLN, KC_EXLM, KC_HASH, KC_GRV),
+               NOROW,
+               ROW(KC_CIRC, KC_DLR, KC_SLSH, KC_BSLS, KC_NO),
+               THUM(KC_LSFT, KC_QUOT, KC_DQT, KC_LSFT)),
+  [_Operator] = KCS(ROW(KC_PIPE, KC_AMPR, KC_LT, KC_GT, KC_NO),
+                    NOROW,
+                    ROW(KC_PIPE, KC_AMPR, KC_LT, KC_GT, KC_NO),
+                    RMOD,
+                    ROW(KC_NO, KC_ASTR, KC_PERC, KC_EQL, KC_PLUS),
+                    NOROW,
+                    THUM(KC_LSFT, KC_MINS, KC_TILD, KC_LSFT)),
   [_Mouse] = KCS(LMOD,
                  RMOD,
                  ROW(MS_BTN5, MS_BTN4, MS_BTN2, MS_BTN1, KC_NO),
                  ROW(KC_NO, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT),
-                 NOROW,
-                 NOROW,
+                 ROW(KC_NO, KC_NO, MS_WHLL, MS_WHLD, KC_NO),
+                 ROW(KC_NO, MS_WHLU, MS_WHLR, KC_NO, KC_NO),
                  THUM(KC_NO, KC_NO, KC_NO, KC_NO)),
   [_Plane] = KCS(NOROW,
                  NOROW,
