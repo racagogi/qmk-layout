@@ -116,7 +116,8 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
   if (!process_layer_lock(keycode, record, LLOCK)) {
     return false;
   }
-  if (get_mods() == MOD_BIT(KC_LCTL) && layer_state_is(_Kor)) {
+  if (get_mods() == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LGUI)) &&
+      layer_state_is(_Kor)) {
     layer_off(_Kor);
     mode_active = true;
   } else if (mode_active) {
@@ -159,39 +160,6 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
         layer_invert(_Kor);
         tap_code(KC_LNG1);
         break;
-      }
-    case KC_LGUI:
-      if (record->event.pressed) {
-        if (layer_state_is(_Kor)) {
-          layer_off(_Kor);
-          tap_code(KC_LGUI);
-          mode_active = true;
-        } else if (mode_active) {
-          layer_on(_Kor);
-          mode_active = false;
-        }
-      }
-    case KC_LALT:
-      if (record->event.pressed) {
-        if (layer_state_is(_Kor)) {
-          layer_off(_Kor);
-          tap_code(KC_LALT);
-          mode_active = true;
-        } else if (mode_active) {
-          layer_on(_Kor);
-          mode_active = false;
-        }
-      }
-    case KC_LCTL:
-      if (record->event.pressed) {
-        if (layer_state_is(_Kor)) {
-          layer_off(_Kor);
-          tap_code(KC_LCTL);
-          mode_active = true;
-        } else if (mode_active) {
-          layer_on(_Kor);
-          mode_active = false;
-        }
       }
   }
   return true;
