@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INCLUDE_QMK_LAYOUT_KEYCODE_H_
+#define INCLUDE_QMK_LAYOUT_KEYCODE_H_
+
 #include QMK_KEYBOARD_H
 
 enum custom_keycodes
@@ -85,3 +87,4 @@ enum custom_layers
 #define KOR_MINS LT(_Operator, KC_MINS)
 #define KOR_SCLN KC_SCLN
 
+#endif // INCLUDE_QMK-LAYOUT_KEYCODE_H_

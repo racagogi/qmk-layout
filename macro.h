@@ -1,6 +1,6 @@
-#pragma once
-#include "keycode.h"
-#include QMK_KEYBOARD_H
+#ifndef INCLUDE_QMK_LAYOUT_MACRO_H_
+#define INCLUDE_QMK_LAYOUT_MACRO_H_
+
 
 bool
 process_record_user(uint16_t keycode, keyrecord_t* record)
@@ -49,3 +49,4 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
   return true;
 }
 
+#endif  // INCLUDE_QMK-LAYOUT_MACRO_H_

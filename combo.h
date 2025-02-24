@@ -1,6 +1,6 @@
-#pragma once
-#include QMK_KEYBOARD_H
-#include "keycode.h"
+#ifndef INCLUDE_QMK_LAYOUT_COMBO_H_
+#define INCLUDE_QMK_LAYOUT_COMBO_H_
+
 #define COMBO_LIST                                                             \
   COMBO_X(QGRV_BOOT, QK_BOOT, KC_Q, KC_GRV)                                    \
   COMBO_X(TN_WORD, CW_TOGG, COLEMAK_T, COLEMAK_N)                              \
@@ -18,7 +18,7 @@
   COMBO_X(IMIN_DEL, KC_DEL, COLEMAK_I, COLEMAK_MINS)                           \
   COMBO_X(AZ_INS, KC_INS, COLEMAK_A, COLEMAK_Z)                                \
   COMBO_X(OSCLN_DEL, KC_INS, COLEMAK_O, COLEMAK_SCLN)                          \
-  COMBO_X(TG_LANG, LANG_TG, KC_SPC, KC_BSPC)                                  \
+  COMBO_X(TG_LANG, LANG_TG, KC_SPC, KC_BSPC)                                   \
   COMBO_X(DH_LOCK, LLOCK, COLEMAK_D, COLEMAK_H)                                \
   COMBO_X(DC_PLANE, OSL(_Plane), COLEMAK_D, COLEMAK_C)                         \
   COMBO_X(CX_WIN, OSL(_Win), COLEMAK_C, COLEMAK_X)                             \
@@ -36,7 +36,7 @@ enum combos
 
 #define COMBO_X(name, combos, ...)                                             \
   const uint16_t PROGMEM name##_combo[] = { __VA_ARGS__, COMBO_END };
-COMBO_LIST
+    COMBO_LIST;
 #undef COMBO_X
 
 combo_t key_combos[] = {
@@ -45,3 +45,4 @@ combo_t key_combos[] = {
 #undef COMBO_X
 };
 
+#endif // INCLUDE_QMK-LAYOUT_COMBO_H_

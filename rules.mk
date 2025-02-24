@@ -7,4 +7,5 @@ CONSOLE_ENABLE  = no
 COMBO_ENABLE    = yes
 KEY_OVERRIDE_ENABLE = yes
 CAPS_WORD_ENABLE = yes
+MOUSEKEY_ENABLE = yes
 SRC += features/layer_lock.c

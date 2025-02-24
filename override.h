@@ -1,6 +1,6 @@
-#pragma once
-#include QMK_KEYBOARD_H
-#include "keycode.h"
+#ifndef INCLUDE_QMK_LAYOUT_OVERRIDE_H_
+#define INCLUDE_QMK_LAYOUT_OVERRIDE_H_
+
 
 const key_override_t f1_key_override =
   ko_make_basic(MOD_MASK_SHIFT, KC_1, KC_F1);
@@ -30,3 +30,4 @@ const key_override_t* key_overrides[] = {
   &f9_key_override, &f10_key_override,
 };
 
+#endif  // INCLUDE_QMK-LAYOUT_OVERRIDE_H_
