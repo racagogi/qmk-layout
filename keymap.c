@@ -109,20 +109,47 @@ enum custom_layers
 #define KOR_MINS LT(_Operator, KC_MINS)
 #define KOR_SCLN KC_SCLN
 
+#define HT(key, mod)                                                           \
+  if (record->event.pressed) {                                                 \
+    my_hash_timer = timer_read();                                              \
+    register_code(mod);                                                        \
+  } else {                                                                     \
+    unregister_code(mod);                                                      \
+    if (timer_elapsed(my_hash_timer) < TAPPING_TERM) {                         \
+      SEND_STRING(key);                                                        \
+    }                                                                          \
+  }
+
 bool
 process_record_user(uint16_t keycode, keyrecord_t* record)
 {
-  static bool mode_active = false;
+  static bool ctl_active = false;
+  static bool alt_active = false;
+  static bool gui_active = false;
+  static uint16_t my_hash_timer;
   if (!process_layer_lock(keycode, record, LLOCK)) {
     return false;
   }
-  if (get_mods() == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LGUI)) &&
-      layer_state_is(_Kor)) {
+  if (get_mods() == MOD_BIT(KC_LCTL) && layer_state_is(_Kor)) {
     layer_off(_Kor);
-    mode_active = true;
-  } else if (mode_active) {
+    ctl_active = true;
+  } else if (ctl_active) {
     layer_on(_Kor);
-    mode_active = false;
+    ctl_active = false;
+  }
+  if (get_mods() == MOD_BIT(KC_LALT) && layer_state_is(_Kor)) {
+    layer_off(_Kor);
+    alt_active = true;
+  } else if (alt_active) {
+    layer_on(_Kor);
+    alt_active = false;
+  }
+  if (get_mods() == MOD_BIT(KC_LGUI) && layer_state_is(_Kor)) {
+    layer_off(_Kor);
+    gui_active = true;
+  } else if (gui_active) {
+    layer_on(_Kor);
+    gui_active = false;
   }
   switch (keycode) {
     case VI_VSP:
@@ -161,6 +188,8 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
         tap_code(KC_LNG1);
         break;
       }
+    case KC_PIPE:
+      HT("|", KC_LGUI)
   }
   return true;
 }
