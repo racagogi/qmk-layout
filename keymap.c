@@ -30,7 +30,13 @@ enum custom_keycodes
   VI_SWAP,
   VI_NEXT,
   VI_CLOSE,
-  LANG_TG
+  LANG_TG,
+  GE,
+  LE,
+  PIPE,
+  LARROW,
+  ARROW,
+  BIGARROW,
 };
 
 enum custom_layers
@@ -121,6 +127,31 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
     gui_active = false;
   }
   switch (keycode) {
+    case GE:
+      if (record->event.pressed) {
+        SEND_STRING(">=");
+        break;
+      }
+    case LE:
+      if (record->event.pressed) {
+        SEND_STRING("<=");
+        break;
+      }
+    case LARROW:
+      if (record->event.pressed) {
+        SEND_STRING("<-");
+        break;
+      }
+    case ARROW:
+      if (record->event.pressed) {
+        SEND_STRING("->");
+        break;
+      }
+    case BIGARROW:
+      if (record->event.pressed) {
+        SEND_STRING("=>");
+        break;
+      }
     case VI_VSP:
       if (record->event.pressed) {
         tap_code16(LCTL(KC_W));
@@ -206,7 +237,7 @@ const key_override_t* key_overrides[] = {
   COMBO_X(IMIN_DEL, KC_DEL, COLEMAK_I, COLEMAK_MINS)                           \
   COMBO_X(AZ_INS, KC_INS, COLEMAK_A, COLEMAK_Z)                                \
   COMBO_X(OSCLN_DEL, KC_INS, COLEMAK_O, COLEMAK_SCLN)                          \
-  COMBO_X(TG_LANG, LANG_TG, KC_SPC, KC_BSPC)                                   \
+  COMBO_X(TG_LANG, LANG_TG, LT(_Puc, KC_SPC), LT(_Operator, KC_BSPC))          \
   COMBO_X(DH_LOCK, LLOCK, COLEMAK_D, COLEMAK_H)
 
 enum combos
@@ -236,12 +267,15 @@ combo_t key_combos[] = {
 #define RMOD KC_NO, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI
 #define LMOD KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_NO
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-// #define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
-#define THUM(x0, x1, x2, x3) x0, x1, x2, x3
 
+#define THUM(x0, x1, x2, x3) x0, x1, x2, x3
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
   LAYOUT_split_3x5_2(x0, x1, x2, x3, x4, x5, x6)
-// LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
+#ifdef CRKBD
+#define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
+  LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
+#define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
+#endif /* ifdef CRKBD */
 /* #define KCS(x0, x1, x2, x3, x4, x5, x6) \
   LAYOUT_planck_grid(x0, \
                      KC_NO, \
@@ -270,40 +304,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ROHRW(KC_M, KC_N, KC_E, KC_I, KC_O),
         ROW(COLEMAK_Z, COLEMAK_X, COLEMAK_C, COLEMAK_D, KC_V),
         ROW(KC_K, COLEMAK_H, COLEMAK_QUOT, COLEMAK_MINS, COLEMAK_SCLN),
-        THUM(LT(_Num, KC_COMM), KC_SPC, KC_BSPC, LT(_Mov, KC_DOT))),
-  [_Kor] = KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
-               ROW(KC_Y, KC_U, KC_I, KC_O, KC_UNDS),
-               ROHLW(KC_A, KC_S, KC_D, KC_F, KC_G),
-               ROHRW(KC_H, KC_J, KC_K, KC_L, KC_P),
-               ROW(KOR_Z, KOR_X, KOR_C, KOR_V, KC_B),
-               ROW(KC_N, KOR_M, KOR_QUOT, KOR_MINS, KOR_SCLN),
-               THUM(KC_TRNS, KC_SPC, KC_BSPC, KC_TRNS)),
+        THUM(LT(_Num, KC_COMM),
+             LT(_Puc, KC_SPC),
+             LT(_Operator, KC_BSPC),
+             LT(_Mov, KC_DOT))),
+  [_Kor] =
+    KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
+        ROW(KC_Y, KC_U, KC_I, KC_O, KC_UNDS),
+        ROHLW(KC_A, KC_S, KC_D, KC_F, KC_G),
+        ROHRW(KC_H, KC_J, KC_K, KC_L, KC_P),
+        ROW(KOR_Z, KOR_X, KOR_C, KOR_V, KC_B),
+        ROW(KC_N, KOR_M, KOR_QUOT, KOR_MINS, KOR_SCLN),
+        THUM(KC_TRNS, LT(_Puc, KC_SPC), LT(_Operator, KC_BSPC), KC_TRNS)),
   [_Num] = KCS(ROW(KC_LBRC, KC_LCBR, KC_LPRN, KC_LT, KC_NO),
                ROW(KC_NO, KC_GT, KC_RPRN, KC_RCBR, KC_RBRC),
                ROHLW(KC_9, KC_7, KC_5, KC_3, KC_NO),
                ROHRW(KC_NO, KC_2, KC_4, KC_6, KC_8),
                ROW(KC_NO, KC_NO, KC_F11, KC_1, KC_NO),
                ROW(KC_NO, KC_0, KC_F12, KC_NO, KC_NO),
-               THUM(MO(_Mouse), KC_NO, MO(_Puc), MO(_Mouse))),
+               THUM(MO(_Mouse), KC_SPC, KC_BSPC, MO(_Mouse))),
   [_Mov] = KCS(LMOD,
                RMOD,
                ROW(KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO),
                ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
                NOROW,
                NOROW,
-               THUM(MO(_Mouse), MO(_Operator), KC_NO, MO(_Mouse))),
+               THUM(MO(_Mouse), KC_NO, KC_NO, MO(_Mouse))),
   [_Puc] = KCS(NOROW,
-               ROW(KC_NO, KC_SCLN, KC_QUES, KC_EXLM, KC_NO),
+               ROW(KC_NO, KC_SCLN, KC_QUES, KC_EXLM, LARROW),
                LMOD,
-               ROW(KC_NO, KC_DQT, KC_QUOT, KC_GRV, KC_NO),
+               ROW(KC_NO, KC_DQT, KC_QUOT, KC_GRV, ARROW),
                NOROW,
-               ROW(KC_NO, KC_HASH, KC_AT, KC_DLR, KC_NO),
+               ROW(KC_NO, KC_HASH, KC_AT, KC_DLR, BIGARROW),
                THUM(KC_NO, KC_NO, KC_NO, KC_NO)),
-  [_Operator] = KCS(ROW(KC_NO, KC_NO, KC_CIRC, KC_PERC, KC_NO),
+  [_Operator] = KCS(ROW(LE, GE, KC_CIRC, KC_PERC, KC_NO),
                     NOROW,
                     ROW(KC_PLUS, KC_ASTR, KC_MINS, KC_EQL, KC_NO),
                     RMOD,
-                    ROW(KC_NO, KC_TILD, KC_AMPR, KC_PIPE, KC_NO),
+                    ROW(PIPE, KC_TILD, KC_AMPR, KC_PIPE, KC_NO),
                     NOROW,
                     THUM(KC_NO, KC_NO, KC_NO, KC_NO)),
   [_Mouse] = KCS(LMOD,
