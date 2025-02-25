@@ -99,32 +99,19 @@ enum custom_layers
 bool
 process_record_user(uint16_t keycode, keyrecord_t* record)
 {
-  static bool ctl_active = false;
-  static bool alt_active = false;
-  static bool gui_active = false;
+  static bool past_kor = false;
   if (!process_layer_lock(keycode, record, LLOCK)) {
     return false;
   }
-  if (get_mods() == MOD_BIT(KC_LCTL) && layer_state_is(_Kor)) {
+  if ((get_mods() & (MOD_MASK_CTRL | MOD_MASK_ALT | MOD_MASK_GUI)) &&
+      layer_state_is(_Kor)) {
     layer_off(_Kor);
-    ctl_active = true;
-  } else if (ctl_active) {
+    past_kor = true;
+  } else if (!(get_mods() & (MOD_MASK_CTRL | MOD_MASK_ALT | MOD_MASK_GUI |
+                             MOD_MASK_SHIFT)) &&
+             past_kor) {
     layer_on(_Kor);
-    ctl_active = false;
-  }
-  if (get_mods() == MOD_BIT(KC_LALT) && layer_state_is(_Kor)) {
-    layer_off(_Kor);
-    alt_active = true;
-  } else if (alt_active) {
-    layer_on(_Kor);
-    alt_active = false;
-  }
-  if (get_mods() == MOD_BIT(KC_LGUI) && layer_state_is(_Kor)) {
-    layer_off(_Kor);
-    gui_active = true;
-  } else if (gui_active) {
-    layer_on(_Kor);
-    gui_active = false;
+    past_kor = false;
   }
   switch (keycode) {
     case GE:
@@ -273,14 +260,12 @@ combo_t key_combos[] = {
 #define LMOD KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_NO
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 
-#define THUM(x0, x1, x2, x3) x0, x1, x2, x3
+/* #define THUM(x0, x1, x2, x3) x0, x1, x2, x3
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
-  LAYOUT_split_3x5_2(x0, x1, x2, x3, x4, x5, x6)
-#ifdef CRKBD
+  LAYOUT_split_3x5_2(x0, x1, x2, x3, x4, x5, x6) */
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
   LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
 #define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
-#endif /* ifdef CRKBD */
 /* #define KCS(x0, x1, x2, x3, x4, x5, x6) \
   LAYOUT_planck_grid(x0, \
                      KC_NO, \
