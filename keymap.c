@@ -132,6 +132,11 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
         SEND_STRING(">=");
         break;
       }
+    case PIPE:
+      if (record->event.pressed) {
+        SEND_STRING("|>");
+        break;
+      }
     case LE:
       if (record->event.pressed) {
         SEND_STRING("<=");
@@ -323,26 +328,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                ROW(KC_NO, KC_NO, KC_F11, KC_1, KC_NO),
                ROW(KC_NO, KC_0, KC_F12, KC_NO, KC_NO),
                THUM(MO(_Mouse), KC_SPC, KC_BSPC, MO(_Mouse))),
-  [_Mov] = KCS(LMOD,
-               RMOD,
+  [_Mov] = KCS(ROW(KC_LBRC, KC_LCBR, KC_LPRN, KC_LT, KC_NO),
+               ROW(KC_NO, KC_GT, KC_RPRN, KC_RCBR, KC_RBRC),
                ROW(KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO),
                ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
                NOROW,
                NOROW,
                THUM(MO(_Mouse), KC_NO, KC_NO, MO(_Mouse))),
-  [_Puc] = KCS(NOROW,
+  [_Puc] = KCS(ROW(LE, GE, KC_CIRC, KC_PERC, KC_NO),
                ROW(KC_NO, KC_SCLN, KC_QUES, KC_EXLM, LARROW),
                LMOD,
                ROW(KC_NO, KC_DQT, KC_QUOT, KC_GRV, ARROW),
-               NOROW,
+               ROW(PIPE, KC_TILD, KC_AMPR, KC_PIPE, KC_NO),
                ROW(KC_NO, KC_HASH, KC_AT, KC_DLR, BIGARROW),
                THUM(KC_NO, KC_NO, KC_NO, KC_NO)),
   [_Operator] = KCS(ROW(LE, GE, KC_CIRC, KC_PERC, KC_NO),
-                    NOROW,
+                    ROW(KC_NO, KC_SCLN, KC_QUES, KC_EXLM, LARROW),
                     ROW(KC_PLUS, KC_ASTR, KC_MINS, KC_EQL, KC_NO),
                     RMOD,
                     ROW(PIPE, KC_TILD, KC_AMPR, KC_PIPE, KC_NO),
-                    NOROW,
+                    ROW(KC_NO, KC_HASH, KC_AT, KC_DLR, BIGARROW),
                     THUM(KC_NO, KC_NO, KC_NO, KC_NO)),
   [_Mouse] = KCS(LMOD,
                  RMOD,
