@@ -235,7 +235,7 @@ const key_override_t* key_overrides[] = {
   COMBO_X(IMIN_DEL, KC_DEL, COLEMAK_I, COLEMAK_MINS)                           \
   COMBO_X(AZ_INS, KC_INS, COLEMAK_A, COLEMAK_Z)                                \
   COMBO_X(OSCLN_DEL, KC_INS, COLEMAK_O, COLEMAK_SCLN)                          \
-  COMBO_X(TG_LANG, LANG_TG, LT(_Puc, KC_SPC), LT(_Puc, KC_BSPC))          \
+  COMBO_X(TG_LANG, LANG_TG, LT(_Puc, KC_SPC), LT(_Puc, KC_BSPC))               \
   COMBO_X(DH_LOCK, LLOCK, COLEMAK_D, COLEMAK_H)
 
 enum combos
@@ -303,14 +303,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              LT(_Puc, KC_SPC),
              LT(_Puc, KC_BSPC),
              LT(_Mov, KC_DOT))),
-  [_Kor] =
-    KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
-        ROW(KC_Y, KC_U, KC_I, KC_O, KC_UNDS),
-        ROHLW(KC_A, KC_S, KC_D, KC_F, KC_G),
-        ROHRW(KC_H, KC_J, KC_K, KC_L, KC_P),
-        ROW(KOR_Z, KOR_X, KOR_C, KOR_V, KC_B),
-        ROW(KC_N, KOR_M, KOR_QUOT, KOR_MINS, KOR_SCLN),
-        THUM(KC_TRNS, LT(_Puc, KC_SPC), LT(_Puc, KC_BSPC), KC_TRNS)),
+  [_Kor] = KCS(ROW(KC_Q, KC_W, KC_E, KC_R, KC_T),
+               ROW(KC_Y, KC_U, KC_I, KC_O, KC_UNDS),
+               ROHLW(KC_A, KC_S, KC_D, KC_F, KC_G),
+               ROHRW(KC_H, KC_J, KC_K, KC_L, KC_P),
+               ROW(KOR_Z, KOR_X, KOR_C, KOR_V, KC_B),
+               ROW(KC_N, KOR_M, KOR_QUOT, KOR_MINS, KOR_SCLN),
+               THUM(KC_TRNS, LT(_Puc, KC_SPC), LT(_Puc, KC_BSPC), KC_TRNS)),
   [_Num] = KCS(ROW(KC_CIRC, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
                ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_TILD),
                ROHLW(KC_9, KC_7, KC_5, KC_3, KC_NO),
@@ -320,10 +319,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                THUM(MO(_Mouse), KC_SPC, KC_BSPC, MO(_Mouse))),
   [_Mov] = KCS(ROW(KC_CIRC, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
                ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_TILD),
-               ROW(KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO),
-               ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
-               NOROW,
-               NOROW,
+               ROHLW(KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO),
+               ROHRW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
+               ROW(KC_PLUS, KC_AMPR, KC_NO, KC_NO, KC_NO),
+               ROW(KC_NO, KC_NO, KC_NO, KC_PIPE, KC_AMPR),
                THUM(MO(_Mouse), KC_SPC, KC_BSPC, MO(_Mouse))),
   [_Puc] = KCS(ROW(LE, GE, ARROW, LARROW, KC_NO),
                ROW(KC_NO, BIGARROW, PIPE, KC_NO, KC_NO),
