@@ -204,12 +204,19 @@ const key_override_t f9_key_override =
   ko_make_basic(MOD_MASK_SHIFT, LGUI_T(KC_9), KC_F9);
 const key_override_t f10_key_override =
   ko_make_basic(MOD_MASK_SHIFT, KC_0, KC_F10);
-
+const key_override_t minus_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, KC_UNDS, KC_MINS);
+const key_override_t colon_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, KC_COLN, KC_SCLN);
+const key_override_t exlm_key_override =
+  ko_make_basic(MOD_MASK_SHIFT, KC_BSLS, KC_EXLM);
 // This globally defines all key overrides to be used
 const key_override_t* key_overrides[] = {
-  &f1_key_override, &f2_key_override,  &f3_key_override, &f4_key_override,
-  &f5_key_override, &f6_key_override,  &f7_key_override, &f8_key_override,
-  &f9_key_override, &f10_key_override,
+  &f1_key_override,  &f2_key_override,    &f3_key_override,
+  &f4_key_override,  &f5_key_override,    &f6_key_override,
+  &f7_key_override,  &f8_key_override,    &f9_key_override,
+  &f10_key_override, &minus_key_override, &colon_key_override,
+  &exlm_key_override
 };
 
 #define COMBO_LIST                                                             \
@@ -260,11 +267,12 @@ combo_t key_combos[] = {
 #define LMOD KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_NO
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 
-#define THUM(x0, x1, x2, x3) x0, x1, x2, x3
+/* #define THUM(x0, x1, x2, x3) x0, x1, x2, x3
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
-  LAYOUT_split_3x5_2(x0, x1, x2, x3, x4, x5, x6)
-/* #define KCS(x0, x1, x2, x3, x4, x5, x6) \ LAYOUT_split_3x5_3(x0, x1, x2, x3,
-x4, x5, x6) #define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO */
+  LAYOUT_split_3x5_2(x0, x1, x2, x3, x4, x5, x6) */
+#define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
+  LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
+#define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
 /* #define KCS(x0, x1, x2, x3, x4, x5, x6) \
   LAYOUT_planck_grid(x0, \
                      KC_NO, \
