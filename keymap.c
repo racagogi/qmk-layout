@@ -31,18 +31,6 @@ enum custom_keycodes
   VI_NEXT,
   VI_CLOSE,
   LANG_TG,
-  LARROW,
-  ARROW,
-  PIPE,
-  BIGARROW,
-  TRIDOT,
-  EXACEQ,
-  EXACNEQ,
-  CODE,
-  TRICOLN,
-  BIND,
-  GE,
-  LE,
 };
 
 enum custom_layers
@@ -119,66 +107,6 @@ process_record_user(uint16_t keycode, keyrecord_t* record)
     past_kor = false;
   }
   switch (keycode) {
-    case CODE:
-      if (record->event.pressed) {
-        SEND_STRING("```");
-        break;
-      }
-    case PIPE:
-      if (record->event.pressed) {
-        SEND_STRING("|>");
-        break;
-      }
-    case LE:
-      if (record->event.pressed) {
-        SEND_STRING(">=");
-        break;
-      }
-    case LARROW:
-      if (record->event.pressed) {
-        SEND_STRING("<-");
-        break;
-      }
-    case ARROW:
-      if (record->event.pressed) {
-        SEND_STRING("->");
-        break;
-      }
-    case BIGARROW:
-      if (record->event.pressed) {
-        SEND_STRING("=>");
-        break;
-      }
-    case TRICOLN:
-      if (record->event.pressed) {
-        SEND_STRING(":::");
-        break;
-      }
-    case TRIDOT:
-      if (record->event.pressed) {
-        SEND_STRING("...");
-        break;
-      }
-    case EXACEQ:
-      if (record->event.pressed) {
-        SEND_STRING("===");
-        break;
-      }
-    case EXACNEQ:
-      if (record->event.pressed) {
-        SEND_STRING("!==");
-        break;
-      }
-    case BIND:
-      if (record->event.pressed) {
-        SEND_STRING(">>=");
-        break;
-      }
-    case GE:
-      if (record->event.pressed) {
-        SEND_STRING("<=");
-        break;
-      }
     case VI_VSP:
       if (record->event.pressed) {
         tap_code16(LCTL(KC_W));
@@ -302,13 +230,13 @@ combo_t key_combos[] = {
 #define LMOD KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_NO
 #define TRROW KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 
-#define THUM(x0, x1, x2, x3) x0, x1, x2, x3
+/* #define THUM(x0, x1, x2, x3) x0, x1, x2, x3
 #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
-  LAYOUT_split_3x5_2(x0, x1, x2, x3, x4, x5, x6)
-/* #define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
+  LAYOUT_split_3x5_2(x0, x1, x2, x3, x4, x5, x6) */
+#define KCS(x0, x1, x2, x3, x4, x5, x6)                                        \
                                                                                \
   LAYOUT_split_3x5_3(x0, x1, x2, x3, x4, x5, x6)
-#define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO */
+#define THUM(x0, x1, x2, x3) KC_NO, x0, x1, x2, x3, KC_NO
 /* #define KCS(x0, x1, x2, x3, x4, x5, x6) \
   LAYOUT_planck_grid(x0, \
                      KC_NO, \
@@ -348,26 +276,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                ROW(KOR_Z, KOR_X, KOR_C, KOR_V, KC_B),
                ROW(KC_N, KOR_M, KOR_QUOT, KOR_MINS, KOR_SCLN),
                THUM(KC_TRNS, LT(_Puc, KC_SPC), LT(_Puc, KC_BSPC), KC_TRNS)),
-  [_Num] = KCS(ROW(KC_CIRC, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
-               ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_TILD),
+  [_Num] = KCS(ROW(KC_NO, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
+               ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_NO),
                ROHLW(KC_9, KC_7, KC_5, KC_3, KC_NO),
                ROHRW(KC_NO, KC_2, KC_4, KC_6, KC_8),
-               ROW(KC_PLUS, KC_ASTR, KC_F11, KC_1, KC_NO),
-               ROW(KC_NO, KC_0, KC_F12, KC_PIPE, KC_AMPR),
+               ROW(KC_NO, KC_NO, KC_F11, KC_1, KC_NO),
+               ROW(KC_NO, KC_0, KC_F12, KC_NO, KC_NO),
                THUM(MO(_Mouse), KC_SPC, KC_BSPC, MO(_Mouse))),
-  [_Mov] = KCS(ROW(KC_CIRC, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
-               ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_TILD),
+  [_Mov] = KCS(ROW(KC_NO, KC_LBRC, KC_LCBR, KC_LPRN, KC_NO),
+               ROW(KC_NO, KC_RPRN, KC_RCBR, KC_RBRC, KC_NO),
                ROW(KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_NO),
                ROW(KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT),
-               ROW(KC_PLUS, KC_ASTR, KC_NO, KC_NO, KC_NO),
-               ROW(KC_NO, KC_NO, KC_NO, KC_PIPE, KC_AMPR),
+               NOROW,
+               NOROW,
                THUM(MO(_Mouse), KC_SPC, KC_BSPC, MO(_Mouse))),
-  [_Puc] = KCS(ROW(LE, GE, LARROW, ARROW, KC_NO),
-               ROW(KC_NO, BIGARROW, PIPE, BIND, TRIDOT),
+  [_Puc] = KCS(ROW(KC_EXLM, KC_DLR, KC_AT, KC_HASH, KC_NO),
+               ROW(KC_NO, KC_EQL, KC_TILD, KC_LT, KC_GT),
                LMOD,
-               ROW(KC_NO, KC_DQT, KC_HASH, KC_EQL, KC_GRV),
-               ROW(EXACNEQ, EXACEQ, TRICOLN, CODE, KC_NO),
-               ROW(KC_NO, KC_QUOT, KC_AT, KC_PERC, KC_DLR),
+               ROW(KC_NO, KC_DQT, KC_QUOT, KC_GRV, KC_MINS),
+               ROW(KC_QUES, KC_CIRC, KC_AMPR, KC_PIPE, KC_NO),
+               ROW(KC_NO, KC_ASTR, KC_PERC, KC_PLUS, KC_COLN),
                THUM(KC_NO, KC_NO, KC_NO, KC_NO)),
   [_Mouse] = KCS(LMOD,
                  RMOD,
